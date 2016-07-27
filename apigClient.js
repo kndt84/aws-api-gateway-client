@@ -86,7 +86,7 @@ apigClientFactory.newClient = function (config) {
     
     
     
-    apigClient.invokeApi = function (params, pathTemplate, additionalParams) {
+    apigClient.invokeApi = function (params, pathTemplate, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
         var request = {
