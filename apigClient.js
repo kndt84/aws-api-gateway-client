@@ -86,11 +86,11 @@ apigClientFactory.newClient = function (config) {
     
     
     
-    apigClient.invokeApi = function (params, pathTemplate, body, additionalParams) {
+    apigClient.invokeApi = function (params, pathTemplate, method, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
         var request = {
-            verb: 'put'.toUpperCase(),
+            verb: method.toUpperCase(),
             path: pathComponent + uritemplate.parse(pathTemplate).expand(params),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
