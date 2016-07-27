@@ -1,20 +1,28 @@
+# Overview
+A node.js module for AWS API gateway client. This module is based on auto-generated JavaScript SDK, however, it can be used as node.js module and generalizes endpoint specific functions.
+
+Reference:
+https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-generate-sdk.html
+
 # Prerequisites
 For the JavaScript SDK to work your APIs need to support CORS. The Amazon API Gateway developer guide explains how to [setup CORS for an endpoint]().
-
 
 # Install
 ```
 npm install aws-api-gateway-client
 ```
 
-
-
 # Use the SDK in your project
 
-To initialize the most basic form of the SDK:
-
+Require module
 ```
-var apigClient = apigClientFactory.newClient();
+var apigClientFactory = require('aws-api-gateway-client')
+```
+
+Set config params and create a client. For autholization, additional information is required and explained below.
+```
+config = {invokeUrl:'https://xxxxx.execute-api.us-east-1.amazonaws.com/dev}
+var apigClient = apigClientFactory.newClient(config);
 ```
 
 Calls to an API take the form outlined below. Each API call returns a promise, that invokes either a success and failure callback
@@ -22,9 +30,9 @@ Calls to an API take the form outlined below. Each API call returns a promise, t
 ```
 var params = {
     //This is where any header, path, or querystring request params go. The key is the parameter named as defined in the API
-    param0: '',
-    param1: ''
+    userId: '1234',
 };
+var pathTemplate = '/users/{userID}/profile'
 var body = {
     //This is where you define the body of the request
 };
@@ -40,7 +48,7 @@ var additionalParams = {
     }
 };
 
-apigClient.methodName(params, body, additionalParams)
+apigClient.invokeApi(params, pathTemplate, body, additionalParams)
     .then(function(result){
         //This is where you would put a success callback
     }).catch( function(result){
