@@ -33,6 +33,7 @@ var params = {
     userId: '1234',
 };
 var pathTemplate = '/users/{userID}/profile'
+var method = 'GET';
 var body = {
     //This is where you define the body of the request
 };
