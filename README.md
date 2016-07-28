@@ -1,11 +1,11 @@
 # Overview
-A node.js module for AWS API gateway client. This module is based on auto-generated JavaScript SDK, however, it can be used as node.js module and generalizes endpoint specific functions.
+A node.js module for AWS API gateway client. This module is based on auto-generated JavaScript SDK, however, it can be used as node.js module and generalizes endpoint specific methods.
 
 Reference:  
 https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-generate-sdk.html
 
 # Prerequisites
-For the JavaScript SDK to work your APIs need to support CORS. The Amazon API Gateway developer guide explains how to [setup CORS for an endpoint]().
+For the JavaScript SDK to work your APIs need to support CORS. The Amazon API Gateway developer guide explains how to [setup CORS for an endpoint](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html).
 
 # Install
 ```
@@ -19,7 +19,7 @@ Require module
 var apigClientFactory = require('aws-api-gateway-client')
 ```
 
-Set config params and create a client. For autholization, additional information is required and explained below.
+Set config params and create a client. For autholization, additional information is required as explained below.
 ```
 config = {invokeUrl:'https://xxxxx.execute-api.us-east-1.amazonaws.com}
 var apigClient = apigClientFactory.newClient(config);
@@ -32,6 +32,7 @@ var params = {
     //This is where any header, path, or querystring request params go. The key is the parameter named as defined in the API
     userId: '1234',
 };
+    // Template syntax follow url-template https://www.npmjs.com/package/url-template
 var pathTemplate = '/users/{userID}/profile'
 var method = 'GET';
 var body = {
@@ -77,6 +78,3 @@ var apigClient = apigClientFactory.newClient({
     apiKey: 'API_KEY'
 });
 ```
-
-
-
