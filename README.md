@@ -32,7 +32,7 @@ var params = {
     //This is where any header, path, or querystring request params go. The key is the parameter named as defined in the API
     userId: '1234',
 };
-    // Template syntax follow url-template https://www.npmjs.com/package/url-template
+// Template syntax follows url-template https://www.npmjs.com/package/url-template
 var pathTemplate = '/users/{userID}/profile'
 var method = 'GET';
 var body = {
