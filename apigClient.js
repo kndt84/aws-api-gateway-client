@@ -86,7 +86,9 @@ apigClientFactory.newClient = function (config) {
     
     
     
-    apigClient.invokeApi = function (params, pathTemplate, method, additionalParams={}, body='') {
+    apigClient.invokeApi = function (params, pathTemplate, method, additionalParams, body) {
+	if (additionalParams===undefined) additionalParams={};
+	if (body===undefined) body='';
         
         var request = {
             verb: method.toUpperCase(),
