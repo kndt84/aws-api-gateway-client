@@ -35,9 +35,6 @@ var params = {
 // Template syntax follows url-template https://www.npmjs.com/package/url-template
 var pathTemplate = '/users/{userID}/profile'
 var method = 'GET';
-var body = {
-    //This is where you define the body of the request
-};
 var additionalParams = {
     //If there are any unmodeled query parameters or headers that need to be sent with the request you can add them here
     headers: {
@@ -48,6 +45,9 @@ var additionalParams = {
         param0: '',
         param1: ''
     }
+};
+var body = {
+    //This is where you define the body of the request
 };
 
 apigClient.invokeApi(params, pathTemplate, method, additionalParams, body)
