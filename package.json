@@ -23,7 +23,7 @@
   "dependencies": {
     "axios": "^0.13.1",
     "crypto-js": "^3.1.6",
-    "jsdom": "^9.4.1",
+    "url": "^0.11.0",
     "url-template": "^2.0.8"
   }
 }
