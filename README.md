@@ -50,7 +50,7 @@ var additionalParams = {
     }
 };
 
-apigClient.invokeApi(params, pathTemplate, body, additionalParams)
+apigClient.invokeApi(params, pathTemplate, method, additionalParams, body)
     .then(function(result){
         //This is where you would put a success callback
     }).catch( function(result){
