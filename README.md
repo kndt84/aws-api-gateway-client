@@ -1,5 +1,5 @@
 # Overview
-A node.js module for AWS API gateway client. This module is based on auto-generated JavaScript SDK, however, it can be used as node.js module and generalizes endpoint specific methods.
+Node.js module for AWS API gateway client based on auto-generated JavaScript SDK for browsers. In addition, this module generalizes endpoint specific methods.
 
 Reference:  
 https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-generate-sdk.html
