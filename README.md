@@ -1,3 +1,5 @@
+[![dependencies Status](https://david-dm.org/kndt84/aws-api-gateway-client/status.svg)](https://david-dm.org/kndt84/aws-api-gateway-client)
+
 # Overview
 Node.js module for AWS API gateway client based on auto-generated JavaScript SDK for browsers. In addition, this module generalizes endpoint specific methods.
 
