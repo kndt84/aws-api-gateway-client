@@ -1,7 +1,7 @@
 {
   "name": "aws-api-gateway-client",
   "version": "0.1.10",
-  "description": "A node.js moduel for AWS API Gateway client",
+  "description": "Node.js moduel for AWS API Gateway client",
   "main": "apigClient.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
