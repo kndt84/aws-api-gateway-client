@@ -93,8 +93,8 @@ apigClientFactory.newClient = function (config) {
         var request = {
             verb: method.toUpperCase(),
             path: pathComponent + uritemplate.parse(pathTemplate).expand(params),
-            headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            headers: params,
+            queryParams: params,
             body: body
         };
         
