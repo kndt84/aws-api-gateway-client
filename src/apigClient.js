@@ -54,7 +54,7 @@ apigClientFactory.newClient = function (config) {
     if(config.defaultAcceptType === undefined) {
         config.defaultAcceptType = 'application/json';
     }
-    
+
     // extract endpoint and path from url
     var invokeUrl = config.invokeUrl;
     var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
@@ -83,13 +83,13 @@ apigClientFactory.newClient = function (config) {
     };
 
     var apiGatewayClient = apiGateway.core.apiGatewayClientFactory.newClient(simpleHttpClientConfig, sigV4ClientConfig);
-    
-    
-    
+
+
+
     apigClient.invokeApi = function (params, pathTemplate, method, additionalParams, body) {
-	if (additionalParams===undefined) additionalParams={};
-	if (body===undefined) body='';
-        
+      if (additionalParams===undefined) additionalParams={};
+      if (body===undefined) body='';
+
         var request = {
             verb: method.toUpperCase(),
             path: pathComponent + uritemplate.parse(pathTemplate).expand(params),
@@ -97,10 +97,10 @@ apigClientFactory.newClient = function (config) {
             queryParams: additionalParams.queryParams,
             body: body
         };
-        
+
         return apiGatewayClient.makeRequest(request, authType, additionalParams, config.apiKey);
     };
-    
+
 
     return apigClient;
 };
