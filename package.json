@@ -20,7 +20,7 @@
   "scripts": {
     "transpile": "babel src -d dist/",
     "prepublish": "npm run lint && npm run transpile",
-    "lint:js": "node_modules/eslint/bin/eslint.js lib *.js",
+    "lint": "node_modules/eslint/bin/eslint.js lib *.js",
     "test": "npm run link:js"
   },
   "files": [
