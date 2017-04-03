@@ -14,7 +14,7 @@
  */
 /* eslint max-len: ["error", 100]*/
 
-import 'babel-polyfill';
+// import 'babel-polyfill';
 import uritemplate from 'url-template';
 import apiGatewayClientFactory from './lib/apiGatewayCore/apiGatewayClient';
 
