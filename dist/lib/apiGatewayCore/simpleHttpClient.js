@@ -1,3 +1,19 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _axios = require('axios');
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _utils = require('./utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /*
  * Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
@@ -14,19 +30,16 @@
  */
 /* eslint max-len: ["error", 100]*/
 
-import axios from 'axios';
-import utils from './utils';
-
-const simpleHttpClientFactory = {};
-simpleHttpClientFactory.newClient = config => {
+var simpleHttpClientFactory = {};
+simpleHttpClientFactory.newClient = function (config) {
   function buildCanonicalQueryString(queryParams) {
     // Build a properly encoded query string from a QueryParam object
     if (Object.keys(queryParams).length < 1) {
       return '';
     }
 
-    let canonicalQueryString = '';
-    for (let property in queryParams) {
+    var canonicalQueryString = '';
+    for (var property in queryParams) {
       if (queryParams.hasOwnProperty(property)) {
         canonicalQueryString += encodeURIComponent(property) + '=' + encodeURIComponent(queryParams[property]) + '&';
       }
@@ -35,17 +48,17 @@ simpleHttpClientFactory.newClient = config => {
     return canonicalQueryString.substr(0, canonicalQueryString.length - 1);
   }
 
-  let simpleHttpClient = {};
-  simpleHttpClient.endpoint = utils.assertDefined(config.endpoint, 'endpoint');
+  var simpleHttpClient = {};
+  simpleHttpClient.endpoint = _utils2.default.assertDefined(config.endpoint, 'endpoint');
 
   simpleHttpClient.makeRequest = function (request) {
-    let verb = utils.assertDefined(request.verb, 'verb');
-    let path = utils.assertDefined(request.path, 'path');
-    let queryParams = utils.copy(request.queryParams);
+    var verb = _utils2.default.assertDefined(request.verb, 'verb');
+    var path = _utils2.default.assertDefined(request.path, 'path');
+    var queryParams = _utils2.default.copy(request.queryParams);
     if (queryParams === undefined) {
       queryParams = {};
     }
-    let headers = utils.copy(request.headers);
+    var headers = _utils2.default.copy(request.headers);
     if (headers === undefined) {
       headers = {};
     }
@@ -60,25 +73,25 @@ simpleHttpClientFactory.newClient = config => {
       headers['Accept'] = config.defaultAcceptType;
     }
 
-    let body = utils.copy(request.body);
+    var body = _utils2.default.copy(request.body);
     if (body === undefined) {
       body = '';
     }
 
-    let url = config.endpoint + path;
-    let queryString = buildCanonicalQueryString(queryParams);
+    var url = config.endpoint + path;
+    var queryString = buildCanonicalQueryString(queryParams);
     if (queryString != '') {
       url += '?' + queryString;
     }
-    let simpleHttpRequest = {
+    var simpleHttpRequest = {
       method: verb,
       url: url,
       headers: headers,
       data: body
     };
-    return axios(simpleHttpRequest);
+    return (0, _axios2.default)(simpleHttpRequest);
   };
   return simpleHttpClient;
 };
 
-export default simpleHttpClientFactory;
+exports.default = simpleHttpClientFactory;

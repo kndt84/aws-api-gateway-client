@@ -1,3 +1,19 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _urlTemplate = require('url-template');
+
+var _urlTemplate2 = _interopRequireDefault(_urlTemplate);
+
+var _apiGatewayClient = require('./lib/apiGatewayCore/apiGatewayClient');
+
+var _apiGatewayClient2 = _interopRequireDefault(_apiGatewayClient);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /*
  * Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
@@ -14,13 +30,10 @@
  */
 /* eslint max-len: ["error", 100]*/
 
-import uritemplate from 'url-template';
-import apiGateway from './lib/apiGatewayCore/apiGatewayClient';
+var apigClientFactory = {};
 
-const apigClientFactory = {};
-
-apigClientFactory.newClient = config => {
-  const apigClient = {};
+apigClientFactory.newClient = function (config) {
+  var apigClient = {};
   if (config === undefined) {
     config = {
       accessKey: '',
@@ -58,11 +71,11 @@ apigClientFactory.newClient = config => {
   }
 
   // extract endpoint and path from url
-  const invokeUrl = config.invokeUrl;
-  const endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
-  const pathComponent = invokeUrl.substring(endpoint.length);
+  var invokeUrl = config.invokeUrl;
+  var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
+  var pathComponent = invokeUrl.substring(endpoint.length);
 
-  const sigV4ClientConfig = {
+  var sigV4ClientConfig = {
     accessKey: config.accessKey,
     secretKey: config.secretKey,
     sessionToken: config.sessionToken,
@@ -73,26 +86,26 @@ apigClientFactory.newClient = config => {
     defaultAcceptType: config.defaultAcceptType
   };
 
-  let authType = 'NONE';
+  var authType = 'NONE';
   if (sigV4ClientConfig.accessKey !== undefined && sigV4ClientConfig.accessKey !== '' && sigV4ClientConfig.secretKey !== undefined && sigV4ClientConfig.secretKey !== '') {
     authType = 'AWS_IAM';
   }
 
-  const simpleHttpClientConfig = {
+  var simpleHttpClientConfig = {
     endpoint: endpoint,
     defaultContentType: config.defaultContentType,
     defaultAcceptType: config.defaultAcceptType
   };
 
-  const apiGatewayClient = apiGateway.core.apiGatewayClientFactory.newClient(simpleHttpClientConfig, sigV4ClientConfig);
+  var apiGatewayClient = _apiGatewayClient2.default.core.apiGatewayClientFactory.newClient(simpleHttpClientConfig, sigV4ClientConfig);
 
-  apigClient.invokeApi = (params, pathTemplate, method, additionalParams, body) => {
+  apigClient.invokeApi = function (params, pathTemplate, method, additionalParams, body) {
     if (additionalParams === undefined) additionalParams = {};
     if (body === undefined) body = '';
 
-    const request = {
+    var request = {
       verb: method.toUpperCase(),
-      path: pathComponent + uritemplate.parse(pathTemplate).expand(params),
+      path: pathComponent + _urlTemplate2.default.parse(pathTemplate).expand(params),
       headers: additionalParams.headers || {},
       queryParams: additionalParams.queryParams,
       body: body
@@ -104,4 +117,4 @@ apigClientFactory.newClient = config => {
   return apigClient;
 };
 
-export default apigClientFactory;
+exports.default = apigClientFactory;

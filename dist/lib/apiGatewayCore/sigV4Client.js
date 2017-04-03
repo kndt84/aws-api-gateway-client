@@ -1,3 +1,35 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _axios = require('axios');
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _sha = require('crypto-js/sha256');
+
+var _sha2 = _interopRequireDefault(_sha);
+
+var _encHex = require('crypto-js/enc-hex');
+
+var _encHex2 = _interopRequireDefault(_encHex);
+
+var _hmacSha = require('crypto-js/hmac-sha256');
+
+var _hmacSha2 = _interopRequireDefault(_hmacSha);
+
+var _url = require('url');
+
+var _url2 = _interopRequireDefault(_url);
+
+var _utils = require('./utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /*
  * Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
@@ -14,33 +46,26 @@
  */
 /* eslint max-len: ["error", 100]*/
 
-import axios from 'axios';
-import SHA256 from 'crypto-js/sha256';
-import encHex from 'crypto-js/enc-hex';
-import HmacSHA256 from 'crypto-js/hmac-sha256';
-import urlParser from 'url';
-import utils from './utils';
-
-const sigV4ClientFactory = {};
+var sigV4ClientFactory = {};
 sigV4ClientFactory.newClient = function (config) {
-  let AWS_SHA_256 = 'AWS4-HMAC-SHA256';
-  let AWS4_REQUEST = 'aws4_request';
-  let AWS4 = 'AWS4';
-  let X_AMZ_DATE = 'x-amz-date';
-  let X_AMZ_SECURITY_TOKEN = 'x-amz-security-token';
-  let HOST = 'host';
-  let AUTHORIZATION = 'Authorization';
+  var AWS_SHA_256 = 'AWS4-HMAC-SHA256';
+  var AWS4_REQUEST = 'aws4_request';
+  var AWS4 = 'AWS4';
+  var X_AMZ_DATE = 'x-amz-date';
+  var X_AMZ_SECURITY_TOKEN = 'x-amz-security-token';
+  var HOST = 'host';
+  var AUTHORIZATION = 'Authorization';
 
   function hash(value) {
-    return SHA256(value); // eslint-disable-line
+    return (0, _sha2.default)(value); // eslint-disable-line
   }
 
   function hexEncode(value) {
-    return value.toString(encHex);
+    return value.toString(_encHex2.default);
   }
 
   function hmac(secret, value) {
-    return HmacSHA256(value, secret, { asBytes: true }); // eslint-disable-line
+    return (0, _hmacSha2.default)(value, secret, { asBytes: true }); // eslint-disable-line
   }
 
   function buildCanonicalRequest(method, path, queryParams, headers, payload) {
@@ -60,40 +85,40 @@ sigV4ClientFactory.newClient = function (config) {
       return '';
     }
 
-    let sortedQueryParams = [];
-    for (let property in queryParams) {
+    var sortedQueryParams = [];
+    for (var property in queryParams) {
       if (queryParams.hasOwnProperty(property)) {
         sortedQueryParams.push(property);
       }
     }
     sortedQueryParams.sort();
 
-    let canonicalQueryString = '';
-    for (let i = 0; i < sortedQueryParams.length; i++) {
+    var canonicalQueryString = '';
+    for (var i = 0; i < sortedQueryParams.length; i++) {
       canonicalQueryString += sortedQueryParams[i] + '=' + encodeURIComponent(queryParams[sortedQueryParams[i]]) + '&';
     }
     return canonicalQueryString.substr(0, canonicalQueryString.length - 1);
   }
 
   function buildCanonicalHeaders(headers) {
-    let canonicalHeaders = '';
-    let sortedKeys = [];
-    for (let property in headers) {
+    var canonicalHeaders = '';
+    var sortedKeys = [];
+    for (var property in headers) {
       if (headers.hasOwnProperty(property)) {
         sortedKeys.push(property);
       }
     }
     sortedKeys.sort();
 
-    for (let i = 0; i < sortedKeys.length; i++) {
+    for (var i = 0; i < sortedKeys.length; i++) {
       canonicalHeaders += sortedKeys[i].toLowerCase() + ':' + headers[sortedKeys[i]] + '\n';
     }
     return canonicalHeaders;
   }
 
   function buildCanonicalSignedHeaders(headers) {
-    let sortedKeys = [];
-    for (let property in headers) {
+    var sortedKeys = [];
+    for (var property in headers) {
       if (headers.hasOwnProperty(property)) {
         sortedKeys.push(property.toLowerCase());
       }
@@ -123,25 +148,25 @@ sigV4ClientFactory.newClient = function (config) {
     return AWS_SHA_256 + ' Credential=' + accessKey + '/' + credentialScope + ', SignedHeaders=' + buildCanonicalSignedHeaders(headers) + ', Signature=' + signature;
   }
 
-  let awsSigV4Client = {};
+  var awsSigV4Client = {};
   if (config.accessKey === undefined || config.secretKey === undefined) {
     return awsSigV4Client;
   }
-  awsSigV4Client.accessKey = utils.assertDefined(config.accessKey, 'accessKey');
-  awsSigV4Client.secretKey = utils.assertDefined(config.secretKey, 'secretKey');
+  awsSigV4Client.accessKey = _utils2.default.assertDefined(config.accessKey, 'accessKey');
+  awsSigV4Client.secretKey = _utils2.default.assertDefined(config.secretKey, 'secretKey');
   awsSigV4Client.sessionToken = config.sessionToken;
-  awsSigV4Client.serviceName = utils.assertDefined(config.serviceName, 'serviceName');
-  awsSigV4Client.region = utils.assertDefined(config.region, 'region');
-  awsSigV4Client.endpoint = utils.assertDefined(config.endpoint, 'endpoint');
+  awsSigV4Client.serviceName = _utils2.default.assertDefined(config.serviceName, 'serviceName');
+  awsSigV4Client.region = _utils2.default.assertDefined(config.region, 'region');
+  awsSigV4Client.endpoint = _utils2.default.assertDefined(config.endpoint, 'endpoint');
 
   awsSigV4Client.makeRequest = function (request) {
-    let verb = utils.assertDefined(request.verb, 'verb');
-    let path = utils.assertDefined(request.path, 'path');
-    let queryParams = utils.copy(request.queryParams);
+    var verb = _utils2.default.assertDefined(request.verb, 'verb');
+    var path = _utils2.default.assertDefined(request.path, 'path');
+    var queryParams = _utils2.default.copy(request.queryParams);
     if (queryParams === undefined) {
       queryParams = {};
     }
-    let headers = utils.copy(request.headers);
+    var headers = _utils2.default.copy(request.headers);
     if (headers === undefined) {
       headers = {};
     }
@@ -156,7 +181,7 @@ sigV4ClientFactory.newClient = function (config) {
       headers['Accept'] = config.defaultAcceptType;
     }
 
-    let body = utils.copy(request.body);
+    var body = _utils2.default.copy(request.body);
     // override request body and set to empty when signing GET requests
     if (body === undefined || verb === 'GET') {
       body = '';
@@ -169,25 +194,25 @@ sigV4ClientFactory.newClient = function (config) {
       delete headers['Content-Type'];
     }
 
-    let datetime = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z').replace(/[:\-]|\.\d{3}/g, '');
+    var datetime = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z').replace(/[:\-]|\.\d{3}/g, '');
     headers[X_AMZ_DATE] = datetime;
-    let parser = urlParser.parse(awsSigV4Client.endpoint);
+    var parser = _url2.default.parse(awsSigV4Client.endpoint);
     headers[HOST] = parser.hostname;
 
-    let canonicalRequest = buildCanonicalRequest(verb, path, queryParams, headers, body);
-    let hashedCanonicalRequest = hashCanonicalRequest(canonicalRequest);
-    let credentialScope = buildCredentialScope(datetime, awsSigV4Client.region, awsSigV4Client.serviceName);
-    let stringToSign = buildStringToSign(datetime, credentialScope, hashedCanonicalRequest);
-    let signingKey = calculateSigningKey(awsSigV4Client.secretKey, datetime, awsSigV4Client.region, awsSigV4Client.serviceName);
-    let signature = calculateSignature(signingKey, stringToSign);
+    var canonicalRequest = buildCanonicalRequest(verb, path, queryParams, headers, body);
+    var hashedCanonicalRequest = hashCanonicalRequest(canonicalRequest);
+    var credentialScope = buildCredentialScope(datetime, awsSigV4Client.region, awsSigV4Client.serviceName);
+    var stringToSign = buildStringToSign(datetime, credentialScope, hashedCanonicalRequest);
+    var signingKey = calculateSigningKey(awsSigV4Client.secretKey, datetime, awsSigV4Client.region, awsSigV4Client.serviceName);
+    var signature = calculateSignature(signingKey, stringToSign);
     headers[AUTHORIZATION] = buildAuthorizationHeader(awsSigV4Client.accessKey, credentialScope, headers, signature);
     if (awsSigV4Client.sessionToken !== undefined && awsSigV4Client.sessionToken !== '') {
       headers[X_AMZ_SECURITY_TOKEN] = awsSigV4Client.sessionToken;
     }
     delete headers[HOST];
 
-    let url = config.endpoint + path;
-    let queryString = buildCanonicalQueryString(queryParams);
+    var url = config.endpoint + path;
+    var queryString = buildCanonicalQueryString(queryParams);
     if (queryString != '') {
       url += '?' + queryString;
     }
@@ -197,16 +222,16 @@ sigV4ClientFactory.newClient = function (config) {
       headers['Content-Type'] = config.defaultContentType;
     }
 
-    let signedRequest = {
+    var signedRequest = {
       method: verb,
       url: url,
       headers: headers,
       data: body
     };
-    return axios(signedRequest);
+    return (0, _axios2.default)(signedRequest);
   };
 
   return awsSigV4Client;
 };
 
-export default sigV4ClientFactory;
+exports.default = sigV4ClientFactory;
