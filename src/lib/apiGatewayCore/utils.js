@@ -12,71 +12,73 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
- 
-var apiGateway = apiGateway || {};
-apiGateway.core = apiGateway.core || {};
+/* eslint max-len: ["error", 100]*/
 
-apiGateway.core.utils = {
-    assertDefined: function (object, name) {
-        if (object === undefined) {
-            throw name + ' must be defined';
-        } else {
-            return object;
-        }
-    },
-    assertParametersDefined: function (params, keys, ignore) {
-        if (keys === undefined) {
-            return;
-        }
-        if (keys.length > 0 && params === undefined) {
-            params = {};
-        }
-        for (var i = 0; i < keys.length; i++) {
-            if(!apiGateway.core.utils.contains(ignore, keys[i])) {
-                apiGateway.core.utils.assertDefined(params[keys[i]], keys[i]);
-            }
-        }
-    },
-    parseParametersToObject: function (params, keys) {
-        if (params === undefined) {
-            return {};
-        }
-        var object = { };
-        for (var i = 0; i < keys.length; i++) {
-            object[keys[i]] = params[keys[i]];
-        }
-        return object;
-    },
-    contains: function(a, obj) {
-        if(a === undefined) { return false;}
-        var i = a.length;
-        while (i--) {
-            if (a[i] === obj) {
-                return true;
-            }
-        }
-        return false;
-    },
-    copy: function (obj) {
-        if (null == obj || "object" != typeof obj) return obj;
-        var copy = obj.constructor();
-        for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-        }
-        return copy;
-    },
-    mergeInto: function (baseObj, additionalProps) {
-        if (null == baseObj || "object" != typeof baseObj) return baseObj;
-        var merged = baseObj.constructor();
-        for (var attr in baseObj) {
-            if (baseObj.hasOwnProperty(attr)) merged[attr] = baseObj[attr];
-        }
-        if (null == additionalProps || "object" != typeof additionalProps) return baseObj;
-        for (attr in additionalProps) {
-            if (additionalProps.hasOwnProperty(attr)) merged[attr] = additionalProps[attr];
-        }
-        return merged;
+const utils = {
+  assertDefined: function(object, name) {
+    if (object === undefined) {
+      throw new Error(`${name} must be defined`);
+    } else {
+      return object;
     }
+  },
+  assertParametersDefined: function(params, keys, ignore) {
+    if (keys === undefined) {
+      return;
+    }
+    if (keys.length > 0 && params === undefined) {
+      params = {};
+    }
+    for (let i = 0; i < keys.length; i++) {
+      if(!utils.contains(ignore, keys[i])) {
+        utils.assertDefined(params[keys[i]], keys[i]);
+      }
+    }
+  },
+  parseParametersToObject: function(params, keys) {
+    if (params === undefined) {
+      return {};
+    }
+    let object = { };
+    for (let i = 0; i < keys.length; i++) {
+      object[keys[i]] = params[keys[i]];
+    }
+    return object;
+  },
+  contains: function(a, obj) {
+    if(a === undefined) {
+      return false;
+    }
+    let i = a.length;
+    while (i--) {
+      if (a[i] === obj) {
+        return true;
+      }
+    }
+    return false;
+  },
+  copy: function(obj) {
+    if (null == obj || 'object' != typeof obj) return obj;
+    let copy = obj.constructor();
+    let attr = null;
+    for (attr in obj) {
+      if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
+  },
+  mergeInto: function(baseObj, additionalProps) {
+    if (null == baseObj || 'object' != typeof baseObj) return baseObj;
+    let merged = baseObj.constructor();
+    let attr = null;
+    for (attr in baseObj) {
+      if (baseObj.hasOwnProperty(attr)) merged[attr] = baseObj[attr];
+    }
+    if (null == additionalProps || 'object' != typeof additionalProps) return baseObj;
+    for (attr in additionalProps) {
+      if (additionalProps.hasOwnProperty(attr)) merged[attr] = additionalProps[attr];
+    }
+    return merged;
+  },
 };
 
-module.exports = apiGateway.core.utils;
+export default utils;

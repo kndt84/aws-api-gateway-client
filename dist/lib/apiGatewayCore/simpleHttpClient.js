@@ -12,74 +12,73 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+/* eslint max-len: ["error", 100]*/
 
-var apiGateway = apiGateway || {};
-apiGateway.core = apiGateway.core || {};
-apiGateway.core.utils = require('./utils');
-var axios = require('axios');
+import axios from 'axios';
+import utils from './utils';
 
-apiGateway.core.simpleHttpClientFactory = {};
-apiGateway.core.simpleHttpClientFactory.newClient = function (config) {
-    function buildCanonicalQueryString(queryParams) {
-        //Build a properly encoded query string from a QueryParam object
-        if (Object.keys(queryParams).length < 1) {
-            return '';
-        }
-
-        var canonicalQueryString = '';
-        for (var property in queryParams) {
-            if (queryParams.hasOwnProperty(property)) {
-                canonicalQueryString += encodeURIComponent(property) + '=' + encodeURIComponent(queryParams[property]) + '&';
-            }
-        }
-
-        return canonicalQueryString.substr(0, canonicalQueryString.length - 1);
+const simpleHttpClientFactory = {};
+simpleHttpClientFactory.newClient = config => {
+  function buildCanonicalQueryString(queryParams) {
+    // Build a properly encoded query string from a QueryParam object
+    if (Object.keys(queryParams).length < 1) {
+      return '';
     }
 
-    var simpleHttpClient = {};
-    simpleHttpClient.endpoint = apiGateway.core.utils.assertDefined(config.endpoint, 'endpoint');
+    let canonicalQueryString = '';
+    for (let property in queryParams) {
+      if (queryParams.hasOwnProperty(property)) {
+        canonicalQueryString += encodeURIComponent(property) + '=' + encodeURIComponent(queryParams[property]) + '&';
+      }
+    }
 
-    simpleHttpClient.makeRequest = function (request) {
-        var verb = apiGateway.core.utils.assertDefined(request.verb, 'verb');
-        var path = apiGateway.core.utils.assertDefined(request.path, 'path');
-        var queryParams = apiGateway.core.utils.copy(request.queryParams);
-        if (queryParams === undefined) {
-            queryParams = {};
-        }
-        var headers = apiGateway.core.utils.copy(request.headers);
-        if (headers === undefined) {
-            headers = {};
-        }
+    return canonicalQueryString.substr(0, canonicalQueryString.length - 1);
+  }
 
-        //If the user has not specified an override for Content type the use default
-        if (headers['Content-Type'] === undefined) {
-            headers['Content-Type'] = config.defaultContentType;
-        }
+  let simpleHttpClient = {};
+  simpleHttpClient.endpoint = utils.assertDefined(config.endpoint, 'endpoint');
 
-        //If the user has not specified an override for Accept type the use default
-        if (headers['Accept'] === undefined) {
-            headers['Accept'] = config.defaultAcceptType;
-        }
+  simpleHttpClient.makeRequest = function (request) {
+    let verb = utils.assertDefined(request.verb, 'verb');
+    let path = utils.assertDefined(request.path, 'path');
+    let queryParams = utils.copy(request.queryParams);
+    if (queryParams === undefined) {
+      queryParams = {};
+    }
+    let headers = utils.copy(request.headers);
+    if (headers === undefined) {
+      headers = {};
+    }
 
-        var body = apiGateway.core.utils.copy(request.body);
-        if (body === undefined) {
-            body = '';
-        }
+    // If the user has not specified an override for Content type the use default
+    if (headers['Content-Type'] === undefined) {
+      headers['Content-Type'] = config.defaultContentType;
+    }
 
-        var url = config.endpoint + path;
-        var queryString = buildCanonicalQueryString(queryParams);
-        if (queryString != '') {
-            url += '?' + queryString;
-        }
-        var simpleHttpRequest = {
-            method: verb,
-            url: url,
-            headers: headers,
-            data: body
-        };
-        return axios(simpleHttpRequest);
+    // If the user has not specified an override for Accept type the use default
+    if (headers['Accept'] === undefined) {
+      headers['Accept'] = config.defaultAcceptType;
+    }
+
+    let body = utils.copy(request.body);
+    if (body === undefined) {
+      body = '';
+    }
+
+    let url = config.endpoint + path;
+    let queryString = buildCanonicalQueryString(queryParams);
+    if (queryString != '') {
+      url += '?' + queryString;
+    }
+    let simpleHttpRequest = {
+      method: verb,
+      url: url,
+      headers: headers,
+      data: body
     };
-    return simpleHttpClient;
+    return axios(simpleHttpRequest);
+  };
+  return simpleHttpClient;
 };
 
-module.exports = apiGateway.core.simpleHttpClientFactory;
+export default simpleHttpClientFactory;

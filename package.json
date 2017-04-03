@@ -39,6 +39,8 @@
       "google"
     ],
     "rules": {
+      "max-len": ["error", 100],
+      "require-jsdoc": "off",
       "import/extensions": "off",
       "import/no-extraneous-dependencies": "off"
     }
