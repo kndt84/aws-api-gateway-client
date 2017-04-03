@@ -21,4 +21,14 @@ test('apigClientFactory creates client', t => {
   t.deepEqual(typeof client, 'object');
 });
 
+// IF we make a public test API endpoint, we can do a real request and response here...
+//   (I did this for my own, non-public endpoint, but have not built a TEST one @alan)
+// test('apigClient works', async t => {
+//   const additionalParams = {};
+//   const body = {};
+//   const path = '/mytest/path';
+//   const prom = await apigClient.invokeApi({}, path, 'POST', additionalParams, body);
+//   t.deepEqual(typeof prom, 'object');
+//   t.deepEqual(prom.result, 'myresposne');
+// });
 
