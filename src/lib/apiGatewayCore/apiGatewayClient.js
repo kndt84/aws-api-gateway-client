@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 import utils from './utils';
-import sigV4ClientFactory from './sigV4ClientFactory';
-import simpleHttpClientFactory from './simpleHttpClientFactory';
+import sigV4ClientFactory from './sigV4Client.js';
+import simpleHttpClientFactory from './simpleHttpClient.js';
 
 const apiGatewayClientFactory = {};
 apiGatewayClientFactory.newClient = function(simpleHttpClientConfig, sigV4ClientConfig) {

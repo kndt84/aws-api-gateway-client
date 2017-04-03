@@ -8,13 +8,13 @@ var _utils = require('./utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _sigV4ClientFactory = require('./sigV4ClientFactory');
+var _sigV4Client = require('./sigV4Client.js');
 
-var _sigV4ClientFactory2 = _interopRequireDefault(_sigV4ClientFactory);
+var _sigV4Client2 = _interopRequireDefault(_sigV4Client);
 
-var _simpleHttpClientFactory = require('./simpleHttpClientFactory');
+var _simpleHttpClient = require('./simpleHttpClient.js');
 
-var _simpleHttpClientFactory2 = _interopRequireDefault(_simpleHttpClientFactory);
+var _simpleHttpClient2 = _interopRequireDefault(_simpleHttpClient);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36,8 +36,8 @@ var apiGatewayClientFactory = {}; /*
 apiGatewayClientFactory.newClient = function (simpleHttpClientConfig, sigV4ClientConfig) {
   var apiGatewayClient = {};
   // Spin up 2 httpClients, one for simple requests, one for SigV4
-  var sigV4Client = _sigV4ClientFactory2.default.newClient(sigV4ClientConfig);
-  var simpleHttpClient = _simpleHttpClientFactory2.default.newClient(simpleHttpClientConfig);
+  var sigV4Client = _sigV4Client2.default.newClient(sigV4ClientConfig);
+  var simpleHttpClient = _simpleHttpClient2.default.newClient(simpleHttpClientConfig);
 
   apiGatewayClient.makeRequest = function (request, authType, additionalParams, apiKey) {
     // Default the request to use the simple http client

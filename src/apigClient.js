@@ -14,8 +14,9 @@
  */
 /* eslint max-len: ["error", 100]*/
 
+import 'babel-polyfill';
 import uritemplate from 'url-template';
-import apiGateway from './lib/apiGatewayCore/apiGatewayClient';
+import apiGatewayClientFactory from './lib/apiGatewayCore/apiGatewayClient';
 
 const apigClientFactory = {};
 
@@ -89,7 +90,7 @@ apigClientFactory.newClient = (config) => {
     defaultAcceptType: config.defaultAcceptType,
   };
 
-  const apiGatewayClient = apiGateway.core.apiGatewayClientFactory.newClient(
+  const apiGatewayClient = apiGatewayClientFactory.newClient(
     simpleHttpClientConfig,
     sigV4ClientConfig
   );
