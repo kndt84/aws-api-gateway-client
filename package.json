@@ -73,6 +73,7 @@
     "url-template": "^2.0.8"
   },
   "devDependencies": {
+    "@ava/babel-preset-stage-4": "^1.0.0",
     "ava": "^0.18.2",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
