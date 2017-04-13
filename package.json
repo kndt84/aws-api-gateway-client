@@ -1,6 +1,6 @@
 {
   "name": "aws-api-gateway-client",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Node.js moduel for AWS API Gateway client",
   "repository": {
     "type": "git",
@@ -74,7 +74,7 @@
   },
   "devDependencies": {
     "@ava/babel-preset-stage-4": "^1.0.0",
-    "ava": "^0.19.1",
+    "ava": "^0.18.2",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.1",
