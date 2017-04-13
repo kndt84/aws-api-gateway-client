@@ -1,3 +1,19 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _urlTemplate = require('url-template');
+
+var _urlTemplate2 = _interopRequireDefault(_urlTemplate);
+
+var _apiGatewayClient = require('./lib/apiGatewayCore/apiGatewayClient');
+
+var _apiGatewayClient2 = _interopRequireDefault(_apiGatewayClient);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /*
  * Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
@@ -12,94 +28,94 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+/* eslint max-len: ["error", 100]*/
 
+// import 'babel-polyfill';
 var apigClientFactory = {};
-var apiGateway = require('./lib/apiGatewayCore/apiGatewayClient.js');
-var uritemplate = require('url-template');
 
 apigClientFactory.newClient = function (config) {
-    var apigClient = {};
-    if (config === undefined) {
-        config = {
-            accessKey: '',
-            secretKey: '',
-            sessionToken: '',
-            region: '',
-            apiKey: undefined,
-            invokeUrl: '',
-            defaultContentType: 'application/json',
-            defaultAcceptType: 'application/json'
-        };
-    }
-    if (config.accessKey === undefined) {
-        config.accessKey = '';
-    }
-    if (config.secretKey === undefined) {
-        config.secretKey = '';
-    }
-    if (config.apiKey === undefined) {
-        config.apiKey = '';
-    }
-    if (config.sessionToken === undefined) {
-        config.sessionToken = '';
-    }
-    if (config.region === undefined) {
-        config.region = 'us-east-1';
-    }
-    //If defaultContentType is not defined then default to application/json
-    if (config.defaultContentType === undefined) {
-        config.defaultContentType = 'application/json';
-    }
-    //If defaultAcceptType is not defined then default to application/json
-    if (config.defaultAcceptType === undefined) {
-        config.defaultAcceptType = 'application/json';
-    }
+  var apigClient = {};
+  if (config === undefined) {
+    config = {
+      accessKey: '',
+      secretKey: '',
+      sessionToken: '',
+      region: '',
+      apiKey: undefined,
+      invokeUrl: '',
+      defaultContentType: 'application/json',
+      defaultAcceptType: 'application/json'
+    };
+  }
+  if (config.accessKey === undefined) {
+    config.accessKey = '';
+  }
+  if (config.secretKey === undefined) {
+    config.secretKey = '';
+  }
+  if (config.apiKey === undefined) {
+    config.apiKey = '';
+  }
+  if (config.sessionToken === undefined) {
+    config.sessionToken = '';
+  }
+  if (config.region === undefined) {
+    config.region = 'us-east-1';
+  }
+  // If defaultContentType is not defined then default to application/json
+  if (config.defaultContentType === undefined) {
+    config.defaultContentType = 'application/json';
+  }
+  // If defaultAcceptType is not defined then default to application/json
+  if (config.defaultAcceptType === undefined) {
+    config.defaultAcceptType = 'application/json';
+  }
 
-    // extract endpoint and path from url
-    var invokeUrl = config.invokeUrl;
-    var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
-    var pathComponent = invokeUrl.substring(endpoint.length);
+  // extract endpoint and path from url
+  var invokeUrl = config.invokeUrl;
+  var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
+  var pathComponent = invokeUrl.substring(endpoint.length);
 
-    var sigV4ClientConfig = {
-        accessKey: config.accessKey,
-        secretKey: config.secretKey,
-        sessionToken: config.sessionToken,
-        serviceName: 'execute-api',
-        region: config.region,
-        endpoint: endpoint,
-        defaultContentType: config.defaultContentType,
-        defaultAcceptType: config.defaultAcceptType
+  var sigV4ClientConfig = {
+    accessKey: config.accessKey,
+    secretKey: config.secretKey,
+    sessionToken: config.sessionToken,
+    serviceName: 'execute-api',
+    region: config.region,
+    endpoint: endpoint,
+    defaultContentType: config.defaultContentType,
+    defaultAcceptType: config.defaultAcceptType
+  };
+
+  var authType = 'NONE';
+  if (sigV4ClientConfig.accessKey !== undefined && sigV4ClientConfig.accessKey !== '' && sigV4ClientConfig.secretKey !== undefined && sigV4ClientConfig.secretKey !== '') {
+    authType = 'AWS_IAM';
+  }
+
+  var simpleHttpClientConfig = {
+    endpoint: endpoint,
+    defaultContentType: config.defaultContentType,
+    defaultAcceptType: config.defaultAcceptType
+  };
+
+  var apiGatewayClient = _apiGatewayClient2.default.newClient(simpleHttpClientConfig, sigV4ClientConfig);
+
+  apigClient.invokeApi = function (params, pathTemplate, method, additionalParams, body) {
+    if (additionalParams === undefined) additionalParams = {};
+    if (body === undefined) body = '';
+
+    var request = {
+      verb: method.toUpperCase(),
+      path: pathComponent + _urlTemplate2.default.parse(pathTemplate).expand(params),
+      headers: additionalParams.headers || {},
+      queryParams: additionalParams.queryParams,
+      body: body
     };
 
-    var authType = 'NONE';
-    if (sigV4ClientConfig.accessKey !== undefined && sigV4ClientConfig.accessKey !== '' && sigV4ClientConfig.secretKey !== undefined && sigV4ClientConfig.secretKey !== '') {
-        authType = 'AWS_IAM';
-    }
+    return apiGatewayClient.makeRequest(request, authType, additionalParams, config.apiKey);
+  };
 
-    var simpleHttpClientConfig = {
-        endpoint: endpoint,
-        defaultContentType: config.defaultContentType,
-        defaultAcceptType: config.defaultAcceptType
-    };
-
-    var apiGatewayClient = apiGateway.core.apiGatewayClientFactory.newClient(simpleHttpClientConfig, sigV4ClientConfig);
-
-    apigClient.invokeApi = function (params, pathTemplate, method, additionalParams, body) {
-        if (additionalParams === undefined) additionalParams = {};
-        if (body === undefined) body = '';
-
-        var request = {
-            verb: method.toUpperCase(),
-            path: pathComponent + uritemplate.parse(pathTemplate).expand(params),
-            headers: additionalParams.headers || {},
-            queryParams: additionalParams.queryParams,
-            body: body
-        };
-
-        return apiGatewayClient.makeRequest(request, authType, additionalParams, config.apiKey);
-    };
-
-    return apigClient;
+  return apigClient;
 };
 
-module.exports = apigClientFactory;
+exports.default = apigClientFactory;
