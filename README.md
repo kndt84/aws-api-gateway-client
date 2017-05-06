@@ -18,7 +18,7 @@ npm install aws-api-gateway-client
 
 Require module
 ```
-var apigClientFactory = require('aws-api-gateway-client')
+var apigClientFactory = require('aws-api-gateway-client').default;
 ```
 
 Set invokeUrl to config and create a client. For autholization, additional information is required as explained below.
