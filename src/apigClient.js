@@ -30,6 +30,7 @@ apigClientFactory.newClient = (config) => {
       region: '',
       apiKey: undefined,
       invokeUrl: '',
+      service: '',
       defaultContentType: 'application/json',
       defaultAcceptType: 'application/json',
     };
@@ -49,6 +50,9 @@ apigClientFactory.newClient = (config) => {
   if (config.region === undefined) {
     config.region = 'us-east-1';
   }
+  if (config.service === undefined) {
+    config.service = 'execute-api';
+  }
   // If defaultContentType is not defined then default to application/json
   if (config.defaultContentType === undefined) {
     config.defaultContentType = 'application/json';
@@ -67,7 +71,7 @@ apigClientFactory.newClient = (config) => {
     accessKey: config.accessKey,
     secretKey: config.secretKey,
     sessionToken: config.sessionToken,
-    serviceName: 'execute-api',
+    serviceName: service,
     region: config.region,
     endpoint: endpoint,
     defaultContentType: config.defaultContentType,
