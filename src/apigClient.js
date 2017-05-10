@@ -71,7 +71,7 @@ apigClientFactory.newClient = (config) => {
     accessKey: config.accessKey,
     secretKey: config.secretKey,
     sessionToken: config.sessionToken,
-    serviceName: service,
+    serviceName: config.service,
     region: config.region,
     endpoint: endpoint,
     defaultContentType: config.defaultContentType,
