@@ -35,30 +35,30 @@ apigClientFactory.newClient = (config) => {
       defaultAcceptType: 'application/json',
     };
   }
-  if (config.accessKey === undefined) {
+  if (typeof config.accessKey === 'undefined') {
     config.accessKey = '';
   }
-  if (config.secretKey === undefined) {
+  if (typeof config.secretKey === 'undefined') {
     config.secretKey = '';
   }
-  if (config.apiKey === undefined) {
+  if (typeof config.apiKey === 'undefined') {
     config.apiKey = '';
   }
-  if (config.sessionToken === undefined) {
+  if (typeof config.sessionToken === 'undefined') {
     config.sessionToken = '';
   }
-  if (config.region === undefined) {
+  if (typeof config.region === 'undefined') {
     config.region = 'us-east-1';
   }
-  if (config.service === undefined) {
+  if (typeof config.service === 'undefined') {
     config.service = 'execute-api';
   }
   // If defaultContentType is not defined then default to application/json
-  if (config.defaultContentType === undefined) {
+  if (typeof config.defaultContentType === 'undefined') {
     config.defaultContentType = 'application/json';
   }
   // If defaultAcceptType is not defined then default to application/json
-  if (config.defaultAcceptType === undefined) {
+  if (typeof config.defaultAcceptType === 'undefined') {
     config.defaultAcceptType = 'application/json';
   }
 
