@@ -1,6 +1,6 @@
 {
   "name": "aws-api-gateway-client",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Node.js moduel for AWS API Gateway client",
   "repository": {
     "type": "git",
