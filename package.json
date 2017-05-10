@@ -62,6 +62,7 @@
         100
       ],
       "require-jsdoc": "off",
+      "no-undef": "off",
       "import/extensions": "off",
       "import/no-extraneous-dependencies": "off"
     }
