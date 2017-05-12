@@ -185,7 +185,13 @@ sigV4ClientFactory.newClient = function(config) {
     let datetime = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z').replace(/[:\-]|\.\d{3}/g, '');
     headers[X_AMZ_DATE] = datetime;
     let parser = urlParser.parse(awsSigV4Client.endpoint);
-    headers[HOST] = parser.hostname;
+
+    // Check if a different signing host has been set
+    if(config.signingHost !== undefined) {
+        headers[HOST] = config.signingHost;
+    } else {
+        headers[HOST] = parser.hostname;
+    }
 
     let canonicalRequest = buildCanonicalRequest(verb, path, queryParams, headers, body);
     let hashedCanonicalRequest = hashCanonicalRequest(canonicalRequest);
