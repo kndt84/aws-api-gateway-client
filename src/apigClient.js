@@ -33,6 +33,7 @@ apigClientFactory.newClient = (config) => {
       service: '',
       defaultContentType: 'application/json',
       defaultAcceptType: 'application/json',
+      signingHost: ''
     };
   }
   if (typeof config.accessKey === 'undefined') {
@@ -76,6 +77,7 @@ apigClientFactory.newClient = (config) => {
     endpoint: endpoint,
     defaultContentType: config.defaultContentType,
     defaultAcceptType: config.defaultAcceptType,
+    signingHost: config.signingHost
   };
 
   let authType = 'NONE';
