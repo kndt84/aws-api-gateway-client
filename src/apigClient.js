@@ -33,6 +33,7 @@ apigClientFactory.newClient = (config) => {
       service: '',
       defaultContentType: 'application/json',
       defaultAcceptType: 'application/json',
+      systemClockOffset: 0,
     };
   }
   if (typeof config.accessKey === 'undefined') {
@@ -61,6 +62,9 @@ apigClientFactory.newClient = (config) => {
   if (typeof config.defaultAcceptType === 'undefined') {
     config.defaultAcceptType = 'application/json';
   }
+  if (typeof config.systemClockOffset === 'undefined') {
+    config.systemClockOffset = 0;
+  }
 
   // extract endpoint and path from url
   const invokeUrl = config.invokeUrl;
@@ -76,6 +80,7 @@ apigClientFactory.newClient = (config) => {
     endpoint: endpoint,
     defaultContentType: config.defaultContentType,
     defaultAcceptType: config.defaultAcceptType,
+    systemClockOffset: config.systemClockOffset,
   };
 
   let authType = 'NONE';

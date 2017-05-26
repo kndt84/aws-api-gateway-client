@@ -194,7 +194,7 @@ sigV4ClientFactory.newClient = function (config) {
       delete headers['Content-Type'];
     }
 
-    var datetime = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z').replace(/[:\-]|\.\d{3}/g, '');
+    var datetime = new Date(new Date().getTime() + config.systemClockOffset).toISOString().replace(/\.\d{3}Z$/, 'Z').replace(/[:\-]|\.\d{3}/g, '');
     headers[X_AMZ_DATE] = datetime;
     var parser = _url2.default.parse(awsSigV4Client.endpoint);
     headers[HOST] = parser.hostname;

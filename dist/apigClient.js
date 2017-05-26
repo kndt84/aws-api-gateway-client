@@ -43,32 +43,40 @@ apigClientFactory.newClient = function (config) {
       region: '',
       apiKey: undefined,
       invokeUrl: '',
+      service: '',
       defaultContentType: 'application/json',
-      defaultAcceptType: 'application/json'
+      defaultAcceptType: 'application/json',
+      systemClockOffset: 0
     };
   }
-  if (config.accessKey === undefined) {
+  if (typeof config.accessKey === 'undefined') {
     config.accessKey = '';
   }
-  if (config.secretKey === undefined) {
+  if (typeof config.secretKey === 'undefined') {
     config.secretKey = '';
   }
-  if (config.apiKey === undefined) {
+  if (typeof config.apiKey === 'undefined') {
     config.apiKey = '';
   }
-  if (config.sessionToken === undefined) {
+  if (typeof config.sessionToken === 'undefined') {
     config.sessionToken = '';
   }
-  if (config.region === undefined) {
+  if (typeof config.region === 'undefined') {
     config.region = 'us-east-1';
   }
+  if (typeof config.service === 'undefined') {
+    config.service = 'execute-api';
+  }
   // If defaultContentType is not defined then default to application/json
-  if (config.defaultContentType === undefined) {
+  if (typeof config.defaultContentType === 'undefined') {
     config.defaultContentType = 'application/json';
   }
   // If defaultAcceptType is not defined then default to application/json
-  if (config.defaultAcceptType === undefined) {
+  if (typeof config.defaultAcceptType === 'undefined') {
     config.defaultAcceptType = 'application/json';
+  }
+  if (typeof config.systemClockOffset === 'undefined') {
+    config.systemClockOffset = 0;
   }
 
   // extract endpoint and path from url
@@ -80,11 +88,12 @@ apigClientFactory.newClient = function (config) {
     accessKey: config.accessKey,
     secretKey: config.secretKey,
     sessionToken: config.sessionToken,
-    serviceName: 'execute-api',
+    serviceName: config.service,
     region: config.region,
     endpoint: endpoint,
     defaultContentType: config.defaultContentType,
-    defaultAcceptType: config.defaultAcceptType
+    defaultAcceptType: config.defaultAcceptType,
+    systemClockOffset: config.systemClockOffset
   };
 
   var authType = 'NONE';
