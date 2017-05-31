@@ -1,7 +1,7 @@
 [![dependencies Status](https://david-dm.org/kndt84/aws-api-gateway-client/status.svg)](https://david-dm.org/kndt84/aws-api-gateway-client)
 
 # Overview
-Node.js module for AWS API gateway client based on auto-generated JavaScript SDK for browsers. In addition, this module generalizes endpoint specific methods.
+A module for AWS API gateway client based on auto-generated JavaScript SDK. This module can be used not only for Node.js but for front-end.
 
 Reference:  
 https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-generate-sdk.html
@@ -69,6 +69,7 @@ var apigClient = apigClientFactory.newClient({
     secretKey: 'SECRET_KEY',
     sessionToken: 'SESSION_TOKEN', //OPTIONAL: If you are using temporary credentials you must include the session token
     region: 'eu-west-1' // OPTIONAL: The region where the API is deployed, by default this parameter is set to us-east-1
+    systemClockOffset: 0 // OPTIONAL: An offset value in milliseconds to apply to signing time
 });
 ```
 
