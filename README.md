@@ -70,6 +70,10 @@ var apigClient = apigClientFactory.newClient({
     sessionToken: 'SESSION_TOKEN', //OPTIONAL: If you are using temporary credentials you must include the session token
     region: 'eu-west-1' // OPTIONAL: The region where the API is deployed, by default this parameter is set to us-east-1
     systemClockOffset: 0 // OPTIONAL: An offset value in milliseconds to apply to signing time
+    retries: 4, // OPTIONAL: Number of times to retry before failing. Uses axon-retry plugin.
+    retryCondition: (err) => { // OPTIONAL: Callback to further control if request should be retried.  Uses axon-retry plugin.
+      return err.response.status === 500;
+    }
 });
 ```
 

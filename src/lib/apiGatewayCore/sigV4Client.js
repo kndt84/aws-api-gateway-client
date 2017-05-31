@@ -15,6 +15,7 @@
 /* eslint max-len: ["error", 100]*/
 
 import axios from 'axios';
+import axiosRetry from 'axios-retry';
 import SHA256 from 'crypto-js/sha256';
 import encHex from 'crypto-js/enc-hex';
 import HmacSHA256 from 'crypto-js/hmac-sha256';
@@ -146,6 +147,8 @@ sigV4ClientFactory.newClient = function(config) {
   awsSigV4Client.serviceName = utils.assertDefined(config.serviceName, 'serviceName');
   awsSigV4Client.region = utils.assertDefined(config.region, 'region');
   awsSigV4Client.endpoint = utils.assertDefined(config.endpoint, 'endpoint');
+  awsSigV4Client.retries = config.retries;
+  awsSigV4Client.retryCondition = config.retryCondition;
 
   awsSigV4Client.makeRequest = function(request) {
     let verb = utils.assertDefined(request.verb, 'verb');
@@ -226,11 +229,20 @@ sigV4ClientFactory.newClient = function(config) {
     }
 
     let signedRequest = {
-      method: verb,
-      url: url,
       headers: headers,
       data: body,
     };
+    if (config.retries !== undefined) {
+      signedRequest.baseURL = url;
+      let client = axios.create(signedRequest);
+      axiosRetry(client, {
+        retries: config.retries,
+        retryCondition: config.retryCondition,
+      });
+      return client.request({method: verb});
+    }
+    signedRequest.method = verb;
+    signedRequest.url = url;
     return axios(signedRequest);
   };
 

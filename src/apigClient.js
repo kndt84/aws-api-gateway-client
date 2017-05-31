@@ -81,6 +81,8 @@ apigClientFactory.newClient = (config) => {
     defaultContentType: config.defaultContentType,
     defaultAcceptType: config.defaultAcceptType,
     systemClockOffset: config.systemClockOffset,
+    retries: config.retries,
+    retryCondition: config.retryCondition,
   };
 
   let authType = 'NONE';
@@ -97,6 +99,8 @@ apigClientFactory.newClient = (config) => {
     endpoint: endpoint,
     defaultContentType: config.defaultContentType,
     defaultAcceptType: config.defaultAcceptType,
+    retries: config.retries,
+    retryCondition: config.retryCondition,
   };
 
   const apiGatewayClient = apiGatewayClientFactory.newClient(
