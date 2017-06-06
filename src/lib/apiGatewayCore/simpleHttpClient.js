@@ -15,6 +15,7 @@
 /* eslint max-len: ["error", 100]*/
 
 import axios from 'axios';
+import axiosRetry from 'axios-retry';
 import utils from './utils';
 
 const simpleHttpClientFactory = {};
@@ -71,14 +72,25 @@ simpleHttpClientFactory.newClient = (config) => {
     if (queryString != '') {
       url += '?' + queryString;
     }
+
     let simpleHttpRequest = {
-      method: verb,
-      url: url,
       headers: headers,
       data: body,
     };
+    if (config.retries !== undefined) {
+      simpleHttpRequest.baseURL = url;
+      let client = axios.create(simpleHttpRequest);
+      axiosRetry(client, {
+        retries: config.retries,
+        retryCondition: config.retryCondition,
+      });
+      return client.request({method: verb});
+    }
+    simpleHttpRequest.method = verb;
+    simpleHttpRequest.url = url;
     return axios(simpleHttpRequest);
   };
+
   return simpleHttpClient;
 };
 
