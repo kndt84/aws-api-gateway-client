@@ -36,7 +36,7 @@ var defaultConfig = {
 apigClientFactory.newClient = (config) => {
   const apigClient = {};
   
-  config = merge(defaultConfig, config);
+  config = Object.assign({}, defaultConfig, config);
 
   // extract endpoint and path from url
   const invokeUrl = config.invokeUrl;
