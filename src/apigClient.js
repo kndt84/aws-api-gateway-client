@@ -20,23 +20,28 @@ import apiGatewayClientFactory from './lib/apiGatewayCore/apiGatewayClient';
 
 const apigClientFactory = {};
 
-var defaultConfig = {
-  accessKey: '',
-  secretKey: '',
-  sessionToken: '',
-  region: 'us-east-1',
-  apiKey: '',
-  invokeUrl: '',
-  service: 'execute-api',
-  defaultContentType: 'application/json',
-  defaultAcceptType: 'application/json',
-  systemClockOffset: 0
+const removeEmpty = (obj) => {
+  Object.keys(obj).forEach(key =>
+    (obj[key] && typeof obj[key] === 'object') && removeEmpty(obj[key]) || (obj[key] === undefined) && delete obj[key]
+  );
+  return obj;
 };
 
 apigClientFactory.newClient = (config) => {
   const apigClient = {};
   
-  config = Object.assign({}, defaultConfig, config);
+  config = Object.assign({
+    accessKey: '',
+    secretKey: '',
+    sessionToken: '',
+    region: 'us-east-1',
+    apiKey: '',
+    invokeUrl: '',
+    service: 'execute-api',
+    defaultContentType: 'application/json',
+    defaultAcceptType: 'application/json',
+    systemClockOffset: 0
+  }, removeEmpty(config));
 
   // extract endpoint and path from url
   const invokeUrl = config.invokeUrl;
