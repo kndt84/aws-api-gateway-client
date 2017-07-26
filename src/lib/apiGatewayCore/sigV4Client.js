@@ -173,10 +173,8 @@ sigV4ClientFactory.newClient = function(config) {
     }
 
     let body = utils.copy(request.body);
-    // override request body and set to empty when signing GET requests
-    if (body === undefined || verb === 'GET') {
-      body = '';
-    } else {
+    // stringify request body
+    if (body) {
       body = JSON.stringify(body);
     }
 
