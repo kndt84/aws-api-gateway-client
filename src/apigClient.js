@@ -27,7 +27,7 @@ const removeEmpty = (obj) => {
   return obj;
 };
 
-apigClientFactory.newClient = (config) => {
+apigClientFactory.newClient = (config = {}) => {
   const apigClient = {};
   
   config = Object.assign({
