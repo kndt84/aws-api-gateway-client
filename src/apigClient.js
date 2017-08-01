@@ -41,7 +41,7 @@ apigClientFactory.newClient = (config = {}) => {
     service: 'execute-api',
     defaultContentType: 'application/json',
     defaultAcceptType: 'application/json',
-    systemClockOffset: 0,
+    systemClockOffset: 0
   }, removeEmpty(config));
 
   // extract endpoint and path from url
@@ -60,7 +60,7 @@ apigClientFactory.newClient = (config = {}) => {
     defaultAcceptType: config.defaultAcceptType,
     systemClockOffset: config.systemClockOffset,
     retries: config.retries,
-    retryCondition: config.retryCondition,
+    retryCondition: config.retryCondition
   };
 
   let authType = 'NONE';
@@ -78,7 +78,7 @@ apigClientFactory.newClient = (config = {}) => {
     defaultContentType: config.defaultContentType,
     defaultAcceptType: config.defaultAcceptType,
     retries: config.retries,
-    retryCondition: config.retryCondition,
+    retryCondition: config.retryCondition
   };
 
   const apiGatewayClient = apiGatewayClientFactory.newClient(
@@ -95,7 +95,7 @@ apigClientFactory.newClient = (config = {}) => {
         path: pathComponent + uritemplate.parse(pathTemplate).expand(params),
         headers: additionalParams.headers || {},
         queryParams: additionalParams.queryParams,
-        body: body,
+        body: body
     };
 
     return apiGatewayClient.makeRequest(request, authType, additionalParams, config.apiKey);
