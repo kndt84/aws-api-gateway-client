@@ -66,20 +66,20 @@ simpleHttpClientFactory.newClient = (config) => {
 
     let url = config.endpoint + path;
     let queryString = buildCanonicalQueryString(queryParams);
-    if (queryString != '') {
+    if (queryString !== '') {
       url += '?' + queryString;
     }
 
     let simpleHttpRequest = {
       headers: headers,
-      data: body,
+      data: body
     };
     if (config.retries !== undefined) {
       simpleHttpRequest.baseURL = url;
       let client = axios.create(simpleHttpRequest);
       axiosRetry(client, {
         retries: config.retries,
-        retryCondition: config.retryCondition,
+        retryCondition: config.retryCondition
       });
       return client.request({method: verb});
     }
