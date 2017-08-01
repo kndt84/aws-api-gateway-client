@@ -20,51 +20,28 @@ import apiGatewayClientFactory from './lib/apiGatewayCore/apiGatewayClient';
 
 const apigClientFactory = {};
 
-apigClientFactory.newClient = (config) => {
+const removeEmpty = (obj) => {
+  Object.keys(obj).forEach(key =>
+    (obj[key] && typeof obj[key] === 'object') && removeEmpty(obj[key]) || (obj[key] === undefined) && delete obj[key]
+  );
+  return obj;
+};
+
+apigClientFactory.newClient = (config = {}) => {
   const apigClient = {};
-  if (config === undefined) {
-    config = {
-      accessKey: '',
-      secretKey: '',
-      sessionToken: '',
-      region: '',
-      apiKey: undefined,
-      invokeUrl: '',
-      service: '',
-      defaultContentType: 'application/json',
-      defaultAcceptType: 'application/json',
-      systemClockOffset: 0,
-    };
-  }
-  if (typeof config.accessKey === 'undefined') {
-    config.accessKey = '';
-  }
-  if (typeof config.secretKey === 'undefined') {
-    config.secretKey = '';
-  }
-  if (typeof config.apiKey === 'undefined') {
-    config.apiKey = '';
-  }
-  if (typeof config.sessionToken === 'undefined') {
-    config.sessionToken = '';
-  }
-  if (typeof config.region === 'undefined') {
-    config.region = 'us-east-1';
-  }
-  if (typeof config.service === 'undefined') {
-    config.service = 'execute-api';
-  }
-  // If defaultContentType is not defined then default to application/json
-  if (typeof config.defaultContentType === 'undefined') {
-    config.defaultContentType = 'application/json';
-  }
-  // If defaultAcceptType is not defined then default to application/json
-  if (typeof config.defaultAcceptType === 'undefined') {
-    config.defaultAcceptType = 'application/json';
-  }
-  if (typeof config.systemClockOffset === 'undefined') {
-    config.systemClockOffset = 0;
-  }
+  
+  config = Object.assign({
+    accessKey: '',
+    secretKey: '',
+    sessionToken: '',
+    region: 'us-east-1',
+    apiKey: '',
+    invokeUrl: '',
+    service: 'execute-api',
+    defaultContentType: 'application/json',
+    defaultAcceptType: 'application/json',
+    systemClockOffset: 0
+  }, removeEmpty(config));
 
   // extract endpoint and path from url
   const invokeUrl = config.invokeUrl;
