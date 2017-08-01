@@ -21,15 +21,16 @@ import apiGatewayClientFactory from './lib/apiGatewayCore/apiGatewayClient';
 const apigClientFactory = {};
 
 const removeEmpty = (obj) => {
-  Object.keys(obj).forEach(key =>
-    (obj[key] && typeof obj[key] === 'object') && removeEmpty(obj[key]) || (obj[key] === undefined) && delete obj[key]
+  Object.keys(obj).forEach((key) =>
+    (obj[key] && typeof obj[key] === 'object') && removeEmpty(obj[key])
+    || (obj[key] === undefined) && delete obj[key]
   );
   return obj;
 };
 
 apigClientFactory.newClient = (config = {}) => {
   const apigClient = {};
-  
+
   config = Object.assign({
     accessKey: '',
     secretKey: '',
@@ -40,7 +41,7 @@ apigClientFactory.newClient = (config = {}) => {
     service: 'execute-api',
     defaultContentType: 'application/json',
     defaultAcceptType: 'application/json',
-    systemClockOffset: 0
+    systemClockOffset: 0,
   }, removeEmpty(config));
 
   // extract endpoint and path from url
