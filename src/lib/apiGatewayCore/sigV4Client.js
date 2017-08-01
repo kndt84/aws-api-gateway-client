@@ -223,7 +223,7 @@ sigV4ClientFactory.newClient = function(config) {
 
     let url = config.endpoint + path;
     let queryString = buildCanonicalQueryString(queryParams);
-    if (queryString != '') {
+    if (queryString !== '') {
       url += '?' + queryString;
     }
 
@@ -234,14 +234,14 @@ sigV4ClientFactory.newClient = function(config) {
 
     let signedRequest = {
       headers: headers,
-      data: body,
+      data: body
     };
     if (config.retries !== undefined) {
       signedRequest.baseURL = url;
       let client = axios.create(signedRequest);
       axiosRetry(client, {
         retries: config.retries,
-        retryCondition: config.retryCondition,
+        retryCondition: config.retryCondition
       });
       return client.request({method: verb});
     }

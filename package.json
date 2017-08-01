@@ -64,7 +64,8 @@
       "require-jsdoc": "off",
       "no-undef": "off",
       "import/extensions": "off",
-      "import/no-extraneous-dependencies": "off"
+      "import/no-extraneous-dependencies": "off",
+      "comma-dangle": 0
     }
   },
   "dependencies": {
