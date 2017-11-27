@@ -59,6 +59,7 @@ const utils = {
   },
   copy: function(obj) {
     if (null === obj || 'object' !== typeof obj) return obj;
+    if (Buffer.isBuffer(obj)) return Buffer.from(obj);
     let copy = obj.constructor();
     let attr = null;
     for (attr in obj) {
