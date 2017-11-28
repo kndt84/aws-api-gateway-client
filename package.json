@@ -65,7 +65,8 @@
       "no-undef": "off",
       "import/extensions": "off",
       "import/no-extraneous-dependencies": "off",
-      "comma-dangle": 0
+      "comma-dangle": "off",
+      "no-useless-escape": "off"
     }
   },
   "dependencies": {

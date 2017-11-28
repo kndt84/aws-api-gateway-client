@@ -30,7 +30,7 @@ const utils = {
       params = {};
     }
     for (let i = 0; i < keys.length; i++) {
-      if(!utils.contains(ignore, keys[i])) {
+      if (!utils.contains(ignore, keys[i])) {
         utils.assertDefined(params[keys[i]], keys[i]);
       }
     }
@@ -46,7 +46,7 @@ const utils = {
     return object;
   },
   contains: function(a, obj) {
-    if(a === undefined) {
+    if (a === undefined) {
       return false;
     }
     let i = a.length;
