@@ -53,12 +53,12 @@ simpleHttpClientFactory.newClient = (config) => {
     }
 
     // If the user has not specified an override for Content type the use default
-    if(headers['Content-Type'] === undefined) {
+    if (headers['Content-Type'] === undefined) {
       headers['Content-Type'] = config.defaultContentType;
     }
 
     // If the user has not specified an override for Accept type the use default
-    if(headers['Accept'] === undefined) {
+    if (headers['Accept'] === undefined) {
       headers['Accept'] = config.defaultAcceptType;
     }
 

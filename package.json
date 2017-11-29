@@ -1,6 +1,6 @@
 {
   "name": "aws-api-gateway-client",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "A moduel for AWS API Gateway client",
   "repository": {
     "type": "git",
@@ -65,12 +65,13 @@
       "no-undef": "off",
       "import/extensions": "off",
       "import/no-extraneous-dependencies": "off",
-      "comma-dangle": 0
+      "comma-dangle": "off",
+      "no-useless-escape": "off"
     }
   },
   "dependencies": {
-    "axios": "^0.16.2",
-    "axios-retry": "^2.0.1",
+    "axios": "^0.17.1",
+    "axios-retry": "^3.0.1",
     "crypto-js": "^3.1.9-1",
     "url": "^0.11.0",
     "url-template": "^2.0.8"

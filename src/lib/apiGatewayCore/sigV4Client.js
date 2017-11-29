@@ -144,7 +144,7 @@ sigV4ClientFactory.newClient = function(config) {
   }
 
   let awsSigV4Client = { };
-  if(config.accessKey === undefined || config.secretKey === undefined) {
+  if (config.accessKey === undefined || config.secretKey === undefined) {
     return awsSigV4Client;
   }
   awsSigV4Client.accessKey = utils.assertDefined(config.accessKey, 'accessKey');
@@ -169,12 +169,12 @@ sigV4ClientFactory.newClient = function(config) {
     }
 
     // If the user has not specified an override for Content type the use default
-    if(headers['Content-Type'] === undefined) {
+    if (headers['Content-Type'] === undefined) {
       headers['Content-Type'] = config.defaultContentType;
     }
 
     // If the user has not specified an override for Accept type the use default
-    if(headers['Accept'] === undefined) {
+    if (headers['Accept'] === undefined) {
       headers['Accept'] = config.defaultAcceptType;
     }
 
@@ -185,7 +185,7 @@ sigV4ClientFactory.newClient = function(config) {
     }
 
     // If there is no body remove the content-type header so it is not included in SigV4 calculation
-    if(body === '' || body === undefined || body === null) {
+    if (body === '' || body === undefined || body === null) {
       delete headers['Content-Type'];
     }
 
@@ -216,7 +216,7 @@ sigV4ClientFactory.newClient = function(config) {
       headers,
       signature
     );
-    if(awsSigV4Client.sessionToken !== undefined && awsSigV4Client.sessionToken !== '') {
+    if (awsSigV4Client.sessionToken !== undefined && awsSigV4Client.sessionToken !== '') {
       headers[X_AMZ_SECURITY_TOKEN] = awsSigV4Client.sessionToken;
     }
     delete headers[HOST];
@@ -228,7 +228,7 @@ sigV4ClientFactory.newClient = function(config) {
     }
 
     // Need to re-attach Content-Type if it is not specified at this point
-    if(headers['Content-Type'] === undefined) {
+    if (headers['Content-Type'] === undefined) {
       headers['Content-Type'] = config.defaultContentType;
     }
 
