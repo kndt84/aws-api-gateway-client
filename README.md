@@ -23,7 +23,7 @@ var apigClientFactory = require('aws-api-gateway-client').default;
 
 Set invokeUrl to config and create a client. For autholization, additional information is required as explained below.
 ```
-config = {invokeUrl:'https://xxxxx.execute-api.us-east-1.amazonaws.com}
+config = {invokeUrl:'https://xxxxx.execute-api.us-east-1.amazonaws.com'}
 var apigClient = apigClientFactory.newClient(config);
 ```
 
