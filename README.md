@@ -23,7 +23,7 @@ var apigClientFactory = require('aws-api-gateway-client').default;
 
 Set invokeUrl to config and create a client. For autholization, additional information is required as explained below.
 ```
-config = {invokeUrl:'https://xxxxx.execute-api.us-east-1.amazonaws.com}
+config = {invokeUrl:'https://xxxxx.execute-api.us-east-1.amazonaws.com'}
 var apigClient = apigClientFactory.newClient(config);
 ```
 
@@ -65,14 +65,15 @@ To initialize the SDK with AWS Credentials use the code below. Note, if you use 
 
 ```
 var apigClient = apigClientFactory.newClient({
+    invokeUrl:'https://xxxxx.execute-api.us-east-1.amazonaws.com',
     accessKey: 'ACCESS_KEY',
     secretKey: 'SECRET_KEY',
     sessionToken: 'SESSION_TOKEN', //OPTIONAL: If you are using temporary credentials you must include the session token
-    region: 'eu-west-1' // OPTIONAL: The region where the API is deployed, by default this parameter is set to us-east-1
-    systemClockOffset: 0 // OPTIONAL: An offset value in milliseconds to apply to signing time
+    region: 'eu-west-1', // OPTIONAL: The region where the API is deployed, by default this parameter is set to us-east-1
+    systemClockOffset: 0, // OPTIONAL: An offset value in milliseconds to apply to signing time
     retries: 4, // OPTIONAL: Number of times to retry before failing. Uses axon-retry plugin.
     retryCondition: (err) => { // OPTIONAL: Callback to further control if request should be retried.  Uses axon-retry plugin.
-      return err.response.status === 500;
+      return err.response && err.response.status === 500;
     }
 });
 ```
