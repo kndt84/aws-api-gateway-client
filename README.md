@@ -1,6 +1,6 @@
 [![dependencies Status](https://david-dm.org/kndt84/aws-api-gateway-client/status.svg)](https://david-dm.org/kndt84/aws-api-gateway-client)
 [![Build Status](https://travis-ci.org/kndt84/aws-api-gateway-client.svg?branch=master)](https://travis-ci.org/kndt84/aws-api-gateway-client)
-![npm](https://img.shields.io/npm/dm/aws-api-gateway-client.svg)
+[![npm](https://img.shields.io/npm/dm/aws-api-gateway-client.svg)](https://www.npmjs.com/package/aws-api-gateway-client)
 
 
 # Overview
