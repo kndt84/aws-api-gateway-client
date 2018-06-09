@@ -4,6 +4,22 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /*
+                                                                                                                                                                                                                                                                   * Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+                                                                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                                                                   * Licensed under the Apache License, Version 2.0 (the "License").
+                                                                                                                                                                                                                                                                   * You may not use this file except in compliance with the License.
+                                                                                                                                                                                                                                                                   * A copy of the License is located at
+                                                                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                                                                   *  http://aws.amazon.com/apache2.0
+                                                                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                                                                   * or in the "license" file accompanying this file. This file is distributed
+                                                                                                                                                                                                                                                                   * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+                                                                                                                                                                                                                                                                   * express or implied. See the License for the specific language governing
+                                                                                                                                                                                                                                                                   * permissions and limitations under the License.
+                                                                                                                                                                                                                                                                   */
+/* eslint max-len: ["error", 100]*/
+
 var _axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
@@ -18,22 +34,7 @@ var _utils2 = _interopRequireDefault(_utils);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var simpleHttpClientFactory = {}; /*
-                                   * Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-                                   *
-                                   * Licensed under the Apache License, Version 2.0 (the "License").
-                                   * You may not use this file except in compliance with the License.
-                                   * A copy of the License is located at
-                                   *
-                                   *  http://aws.amazon.com/apache2.0
-                                   *
-                                   * or in the "license" file accompanying this file. This file is distributed
-                                   * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-                                   * express or implied. See the License for the specific language governing
-                                   * permissions and limitations under the License.
-                                   */
-/* eslint max-len: ["error", 100]*/
-
+var simpleHttpClientFactory = {};
 simpleHttpClientFactory.newClient = function (config) {
   function buildCanonicalQueryString(queryParams) {
     // Build a properly encoded query string from a QueryParam object
@@ -61,10 +62,7 @@ simpleHttpClientFactory.newClient = function (config) {
     if (queryParams === undefined) {
       queryParams = {};
     }
-    var headers = _utils2.default.copy(request.headers);
-    if (headers === undefined) {
-      headers = {};
-    }
+    var headers = _extends({}, _utils2.default.copy(request.headers), config.headers);
 
     // If the user has not specified an override for Content type the use default
     if (headers['Content-Type'] === undefined) {

@@ -47,10 +47,7 @@ simpleHttpClientFactory.newClient = (config) => {
     if (queryParams === undefined) {
       queryParams = {};
     }
-    let headers = utils.copy(request.headers);
-    if (headers === undefined) {
-      headers = {};
-    }
+    let headers = {...utils.copy(request.headers), ...config.headers};
 
     // If the user has not specified an override for Content type the use default
     if (headers['Content-Type'] === undefined) {

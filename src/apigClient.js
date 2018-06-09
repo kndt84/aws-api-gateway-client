@@ -41,7 +41,8 @@ apigClientFactory.newClient = (config = {}) => {
     service: 'execute-api',
     defaultContentType: 'application/json',
     defaultAcceptType: 'application/json',
-    systemClockOffset: 0
+    systemClockOffset: 0,
+    headers: {},
   }, removeEmpty(config));
 
   // extract endpoint and path from url
@@ -78,7 +79,8 @@ apigClientFactory.newClient = (config = {}) => {
     defaultContentType: config.defaultContentType,
     defaultAcceptType: config.defaultAcceptType,
     retries: config.retries,
-    retryCondition: config.retryCondition
+    retryCondition: config.retryCondition,
+    headers: config.headers,
   };
 
   const apiGatewayClient = apiGatewayClientFactory.newClient(
