@@ -14,7 +14,6 @@
  */
 /* eslint max-len: ["error", 100]*/
 
-// import 'babel-polyfill';
 import uritemplate from 'url-template';
 import apiGatewayClientFactory from './lib/apiGatewayCore/apiGatewayClient';
 
@@ -35,7 +34,7 @@ apigClientFactory.newClient = (config = {}) => {
     accessKey: '',
     secretKey: '',
     sessionToken: '',
-    region: 'us-east-1',
+    region: '',
     apiKey: '',
     invokeUrl: '',
     service: 'execute-api',
@@ -102,7 +101,6 @@ apigClientFactory.newClient = (config = {}) => {
 
     return apiGatewayClient.makeRequest(request, authType, additionalParams, config.apiKey);
   };
-
 
   return apigClient;
 };
