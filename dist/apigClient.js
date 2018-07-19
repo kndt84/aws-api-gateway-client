@@ -20,9 +20,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                                                                                                                                                                                                                                                                                */
 /* eslint max-len: ["error", 100]*/
 
-// import 'babel-polyfill';
-
-
 var _urlTemplate = require('url-template');
 
 var _urlTemplate2 = _interopRequireDefault(_urlTemplate);
@@ -51,7 +48,7 @@ apigClientFactory.newClient = function () {
     accessKey: '',
     secretKey: '',
     sessionToken: '',
-    region: 'us-east-1',
+    region: '',
     apiKey: '',
     invokeUrl: '',
     service: 'execute-api',
