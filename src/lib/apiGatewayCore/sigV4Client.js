@@ -179,7 +179,7 @@ sigV4ClientFactory.newClient = function(config) {
     }
 
     let body = utils.copy(request.body);
-    
+
     // stringify request body if content type is JSON
     if (body && headers['Content-Type'] && headers['Content-Type'] === 'application/json') {
       body = JSON.stringify(body);
