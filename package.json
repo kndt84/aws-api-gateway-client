@@ -20,6 +20,7 @@
   "scripts": {
     "transpile": "babel src -d dist/",
     "prepublish": "npm run lint && npm run transpile",
+    "postinstall": "npm install",
     "lint": "node_modules/eslint/bin/eslint.js src lib *.js",
     "test": "npm run lint && nyc --reporter=text ava",
     "test:watch": "ava --watch"
