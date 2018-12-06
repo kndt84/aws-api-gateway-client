@@ -21,6 +21,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * permissions and limitations under the License.
  */
 /* eslint max-len: ["error", 100]*/
+var Buffer = require('buffer/').Buffer;
 
 var utils = {
   assertDefined: function assertDefined(object, name) {
