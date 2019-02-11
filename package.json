@@ -1,7 +1,7 @@
 {
   "name": "aws-api-gateway-client",
   "version": "0.2.16",
-  "description": "A moduel for AWS API Gateway client",
+  "description": "A module for AWS API Gateway client",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kndt84/aws-api-gateway-client.git"
@@ -20,7 +20,7 @@
   "scripts": {
     "transpile": "babel src -d dist/",
     "prepublish": "npm run lint && npm run transpile",
-    "lint": "node_modules/eslint/bin/eslint.js src lib *.js",
+    "lint": "node node_modules/eslint/bin/eslint.js src lib *.js",
     "test": "npm run lint && nyc --reporter=text ava",
     "test:watch": "ava --watch"
   },

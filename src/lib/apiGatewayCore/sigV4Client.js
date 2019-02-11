@@ -155,6 +155,7 @@ sigV4ClientFactory.newClient = function(config) {
   awsSigV4Client.endpoint = utils.assertDefined(config.endpoint, 'endpoint');
   awsSigV4Client.retries = config.retries;
   awsSigV4Client.retryCondition = config.retryCondition;
+  awsSigV4Client.host = config.host;
 
   awsSigV4Client.makeRequest = function(request) {
     let verb = utils.assertDefined(request.verb, 'verb');
@@ -193,8 +194,13 @@ sigV4ClientFactory.newClient = function(config) {
     let datetime = new Date(new Date().getTime() + config.systemClockOffset).toISOString()
                    .replace(/\.\d{3}Z$/, 'Z').replace(/[:\-]|\.\d{3}/g, '');
     headers[X_AMZ_DATE] = datetime;
-    let parser = urlParser.parse(awsSigV4Client.endpoint);
-    headers[HOST] = parser.hostname;
+
+    if (awsSigV4Client.host) {
+      headers[HOST] = awsSigV4Client.host;
+    } else {
+      let parser = urlParser.parse(awsSigV4Client.endpoint);
+      headers[HOST] = parser.host;
+    }
 
     let canonicalRequest = buildCanonicalRequest(verb, path, queryParams, headers, body);
     let hashedCanonicalRequest = hashCanonicalRequest(canonicalRequest);

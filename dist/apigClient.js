@@ -55,7 +55,8 @@ apigClientFactory.newClient = function () {
     defaultContentType: 'application/json',
     defaultAcceptType: 'application/json',
     systemClockOffset: 0,
-    headers: {}
+    headers: {},
+    host: undefined
   }, removeEmpty(config));
 
   // extract endpoint and path from url
@@ -74,7 +75,8 @@ apigClientFactory.newClient = function () {
     defaultAcceptType: config.defaultAcceptType,
     systemClockOffset: config.systemClockOffset,
     retries: config.retries,
-    retryCondition: config.retryCondition
+    retryCondition: config.retryCondition,
+    host: config.host
   };
 
   var authType = 'NONE';
