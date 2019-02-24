@@ -169,6 +169,7 @@ sigV4ClientFactory.newClient = function (config) {
   awsSigV4Client.endpoint = _utils2.default.assertDefined(config.endpoint, 'endpoint');
   awsSigV4Client.retries = config.retries;
   awsSigV4Client.retryCondition = config.retryCondition;
+  awsSigV4Client.host = config.host;
 
   awsSigV4Client.makeRequest = function (request) {
     var verb = _utils2.default.assertDefined(request.verb, 'verb');
@@ -193,7 +194,7 @@ sigV4ClientFactory.newClient = function (config) {
     }
 
     var body = _utils2.default.copy(request.body);
-    
+
     // stringify request body if content type is JSON
     if (body && headers['Content-Type'] && headers['Content-Type'] === 'application/json') {
       body = JSON.stringify(body);
@@ -206,8 +207,13 @@ sigV4ClientFactory.newClient = function (config) {
 
     var datetime = new Date(new Date().getTime() + config.systemClockOffset).toISOString().replace(/\.\d{3}Z$/, 'Z').replace(/[:\-]|\.\d{3}/g, '');
     headers[X_AMZ_DATE] = datetime;
-    var parser = _url2.default.parse(awsSigV4Client.endpoint);
-    headers[HOST] = parser.hostname;
+
+    if (awsSigV4Client.host) {
+      headers[HOST] = awsSigV4Client.host;
+    } else {
+      var parser = _url2.default.parse(awsSigV4Client.endpoint);
+      headers[HOST] = parser.host;
+    }
 
     var canonicalRequest = buildCanonicalRequest(verb, path, queryParams, headers, body);
     var hashedCanonicalRequest = hashCanonicalRequest(canonicalRequest);
