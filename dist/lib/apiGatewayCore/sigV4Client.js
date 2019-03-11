@@ -175,8 +175,14 @@ sigV4ClientFactory.newClient = function (config) {
     var verb = _utils2.default.assertDefined(request.verb, 'verb');
     var path = _utils2.default.assertDefined(request.path, 'path');
     var queryParams = _utils2.default.copy(request.queryParams);
+    var timeout = _utils2.default.copy(request.timeout);
+
     if (queryParams === undefined) {
       queryParams = {};
+    }
+
+    if (timeout === undefined) {
+      timeout = 0;
     }
     var headers = _utils2.default.copy(request.headers);
     if (headers === undefined) {
@@ -240,6 +246,7 @@ sigV4ClientFactory.newClient = function (config) {
 
     var signedRequest = {
       headers: headers,
+      timeout: timeout,
       data: body
     };
     if (config.retries !== undefined) {

@@ -59,8 +59,12 @@ simpleHttpClientFactory.newClient = function (config) {
     var verb = _utils2.default.assertDefined(request.verb, 'verb');
     var path = _utils2.default.assertDefined(request.path, 'path');
     var queryParams = _utils2.default.copy(request.queryParams);
+    var timeout = _utils2.default.copy(request.timeout);
     if (queryParams === undefined) {
       queryParams = {};
+    }
+    if (timeout === undefined) {
+      timeout = 0;
     }
     var headers = _extends({}, _utils2.default.copy(request.headers), config.headers);
 
@@ -84,6 +88,7 @@ simpleHttpClientFactory.newClient = function (config) {
 
     var simpleHttpRequest = {
       headers: headers,
+      timeout: timeout,
       data: body
     };
     if (config.retries !== undefined) {
