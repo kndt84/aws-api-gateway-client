@@ -45,6 +45,7 @@ apiGatewayClientFactory.newClient = function(simpleHttpClientConfig, sigV4Client
     // merge them into the appropriate request properties
     request.headers = utils.mergeInto(request.headers, additionalParams.headers);
     request.queryParams = utils.mergeInto(request.queryParams, additionalParams.queryParams);
+    request.timeout = utils.mergeInto(request.timeout, additionalParams.timeout);
 
     // If an auth type was specified inject the appropriate auth client
     if (authType === 'AWS_IAM') {

@@ -161,8 +161,14 @@ sigV4ClientFactory.newClient = function(config) {
     let verb = utils.assertDefined(request.verb, 'verb');
     let path = utils.assertDefined(request.path, 'path');
     let queryParams = utils.copy(request.queryParams);
+    let timeout = utils.copy(request.timeout);
+
     if (queryParams === undefined) {
       queryParams = {};
+    }
+
+    if (timeout === undefined) {
+      timeout = 0;
     }
     let headers = utils.copy(request.headers);
     if (headers === undefined) {
@@ -241,6 +247,7 @@ sigV4ClientFactory.newClient = function(config) {
 
     let signedRequest = {
       headers: headers,
+      timeout: timeout,
       data: body
     };
     if (config.retries !== undefined) {

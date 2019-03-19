@@ -97,6 +97,7 @@ apigClientFactory.newClient = (config = {}) => {
         verb: method.toUpperCase(),
         path: pathComponent + uritemplate.parse(pathTemplate).expand(params),
         headers: additionalParams.headers || {},
+        timeout: additionalParams.timeout || 0,
         queryParams: additionalParams.queryParams,
         body: body
     };
