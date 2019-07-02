@@ -69,15 +69,27 @@ To initialize the SDK with AWS Credentials use the code below. Note, if you use 
 ```
 var apigClient = apigClientFactory.newClient({
     invokeUrl:'https://xxxxx.execute-api.us-east-1.amazonaws.com', // REQUIRED
-    accessKey: 'ACCESS_KEY', // REQUIRED
-    secretKey: 'SECRET_KEY', // REQUIRED
-    sessionToken: 'SESSION_TOKEN', //OPTIONAL: If you are using temporary credentials you must include the session token
-    region: 'eu-west-1', // REQUIRED: The region where the API is deployed.
-    systemClockOffset: 0, // OPTIONAL: An offset value in milliseconds to apply to signing time
-    retries: 4, // OPTIONAL: Number of times to retry before failing. Uses axon-retry plugin.
-    retryCondition: (err) => { // OPTIONAL: Callback to further control if request should be retried.  Uses axon-retry plugin.
-      return err.response && err.response.status === 500;
-    }
+    
+    region: 'eu-west-1',                                           // REQUIRED: The region where the API is deployed.
+    
+    accessKey: 'ACCESS_KEY',                                       // REQUIRED
+    
+    secretKey: 'SECRET_KEY',                                       // REQUIRED
+
+    sessionToken: 'SESSION_TOKEN',                                 // OPTIONAL: If you are using temporary credentials
+                                                                                you must include the session token.
+    
+    systemClockOffset: 0,                                          // OPTIONAL: An offset value in milliseconds to apply to signing time
+    
+    retries: 4,                                                    // OPTIONAL: Number of times to retry before failing. Uses axios-retry plugin.
+    
+    retryCondition: (err) => {                                     // OPTIONAL: Callback to further control if request should be retried.
+      return err.response && err.response.status === 500;          //           Uses axios-retry plugin.
+    },
+    
+    retryDelay: 100 || 'exponential' || (retryCount, error) => {   // OPTIONAL: Define delay (in ms) as a number, a callback, or
+      return retryCount * 100                                      //           'exponential' to use the in-built exponential backoff
+    }                                                              //           function. Uses axios-retry plugin. Default is no delay.
 });
 ```
 
