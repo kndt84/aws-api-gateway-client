@@ -76,6 +76,7 @@ apigClientFactory.newClient = function () {
     systemClockOffset: config.systemClockOffset,
     retries: config.retries,
     retryCondition: config.retryCondition,
+    retryDelay: config.retryDelay,
     host: config.host
   };
 
@@ -90,6 +91,7 @@ apigClientFactory.newClient = function () {
     defaultAcceptType: config.defaultAcceptType,
     retries: config.retries,
     retryCondition: config.retryCondition,
+    retryDelay: config.retryDelay,
     headers: config.headers
   };
 
@@ -103,6 +105,7 @@ apigClientFactory.newClient = function () {
       verb: method.toUpperCase(),
       path: pathComponent + _urlTemplate2.default.parse(pathTemplate).expand(params),
       headers: additionalParams.headers || {},
+      timeout: additionalParams.timeout || 0,
       queryParams: additionalParams.queryParams,
       body: body
     };
