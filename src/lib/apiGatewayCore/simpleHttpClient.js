@@ -81,13 +81,13 @@ simpleHttpClientFactory.newClient = (config) => {
       let client = axios.create(simpleHttpRequest);
 
       // Allow user configurable delay, or built-in exponential delay
-      let retryDelay = () => 0
+      let retryDelay = () => 0;
       if (config.retryDelay === 'exponential') {
-        retryDelay = axiosRetry.exponentialDelay
+        retryDelay = axiosRetry.exponentialDelay;
       } else if (typeof config.retryDelay === 'number') {
-        retryDelay = () => parseInt(config.retryDelay)
+        retryDelay = () => parseInt(config.retryDelay);
       } else if (typeof config.retryDelay === 'function') {
-        retryDelay = config.retryDelay
+        retryDelay = config.retryDelay;
       }
 
       axiosRetry(client, {

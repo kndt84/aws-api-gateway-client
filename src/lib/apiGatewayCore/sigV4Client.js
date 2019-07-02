@@ -256,15 +256,17 @@ sigV4ClientFactory.newClient = function(config) {
       let client = axios.create(signedRequest);
 
       // Allow user configurable delay, or built-in exponential delay
-      let retryDelay = function () { return 0 }
+      let retryDelay = function() {
+ return 0;
+};
       if (config.retryDelay === 'exponential') {
-        retryDelay = axiosRetry.exponentialDelay
+        retryDelay = axiosRetry.exponentialDelay;
       } else if (typeof config.retryDelay === 'number') {
-        retryDelay = () => parseInt(config.retryDelay)
+        retryDelay = () => parseInt(config.retryDelay);
       } else if (typeof config.retryDelay === 'function') {
-        retryDelay = config.retryDelay
+        retryDelay = config.retryDelay;
       }
-      
+
       axiosRetry(client, {
         retries: config.retries,
         retryCondition: config.retryCondition,
