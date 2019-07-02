@@ -79,9 +79,21 @@ simpleHttpClientFactory.newClient = (config) => {
     if (config.retries !== undefined) {
       simpleHttpRequest.baseURL = url;
       let client = axios.create(simpleHttpRequest);
+
+      // Allow user configurable delay, or built-in exponential delay
+      let retryDelay = () => 0
+      if (config.retryDelay === 'exponential') {
+        retryDelay = axiosRetry.exponentialDelay
+      } else if (typeof config.retryDelay === 'number') {
+        retryDelay = () => parseInt(config.retryDelay)
+      } else if (typeof config.retryDelay === 'function') {
+        retryDelay = config.retryDelay
+      }
+
       axiosRetry(client, {
         retries: config.retries,
-        retryCondition: config.retryCondition
+        retryCondition: config.retryCondition,
+        retryDelay,
       });
       return client.request({method: verb});
     }

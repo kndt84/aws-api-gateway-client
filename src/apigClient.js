@@ -62,6 +62,7 @@ apigClientFactory.newClient = (config = {}) => {
     systemClockOffset: config.systemClockOffset,
     retries: config.retries,
     retryCondition: config.retryCondition,
+    retryDelay: config.retryDelay,
     host: config.host,
   };
 
@@ -81,6 +82,7 @@ apigClientFactory.newClient = (config = {}) => {
     defaultAcceptType: config.defaultAcceptType,
     retries: config.retries,
     retryCondition: config.retryCondition,
+    retryDelay: config.retryDelay,
     headers: config.headers,
   };
 
