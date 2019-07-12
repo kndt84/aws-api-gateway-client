@@ -94,9 +94,25 @@ simpleHttpClientFactory.newClient = function (config) {
     if (config.retries !== undefined) {
       simpleHttpRequest.baseURL = url;
       var client = _axios2.default.create(simpleHttpRequest);
+
+      // Allow user configurable delay, or built-in exponential delay
+      var retryDelay = function retryDelay() {
+        return 0;
+      };
+      if (config.retryDelay === 'exponential') {
+        retryDelay = _axiosRetry2.default.exponentialDelay;
+      } else if (typeof config.retryDelay === 'number') {
+        retryDelay = function retryDelay() {
+          return parseInt(config.retryDelay);
+        };
+      } else if (typeof config.retryDelay === 'function') {
+        retryDelay = config.retryDelay;
+      }
+
       (0, _axiosRetry2.default)(client, {
         retries: config.retries,
-        retryCondition: config.retryCondition
+        retryCondition: config.retryCondition,
+        retryDelay: retryDelay
       });
       return client.request({ method: verb });
     }

@@ -155,6 +155,7 @@ sigV4ClientFactory.newClient = function(config) {
   awsSigV4Client.endpoint = utils.assertDefined(config.endpoint, 'endpoint');
   awsSigV4Client.retries = config.retries;
   awsSigV4Client.retryCondition = config.retryCondition;
+  awsSigV4Client.retryDelay = config.retryDelay;
   awsSigV4Client.host = config.host;
 
   awsSigV4Client.makeRequest = function(request) {
@@ -253,9 +254,23 @@ sigV4ClientFactory.newClient = function(config) {
     if (config.retries !== undefined) {
       signedRequest.baseURL = url;
       let client = axios.create(signedRequest);
+
+      // Allow user configurable delay, or built-in exponential delay
+      let retryDelay = function() {
+ return 0;
+};
+      if (config.retryDelay === 'exponential') {
+        retryDelay = axiosRetry.exponentialDelay;
+      } else if (typeof config.retryDelay === 'number') {
+        retryDelay = () => parseInt(config.retryDelay);
+      } else if (typeof config.retryDelay === 'function') {
+        retryDelay = config.retryDelay;
+      }
+
       axiosRetry(client, {
         retries: config.retries,
-        retryCondition: config.retryCondition
+        retryCondition: config.retryCondition,
+        retryDelay,
       });
       return client.request({method: verb});
     }
