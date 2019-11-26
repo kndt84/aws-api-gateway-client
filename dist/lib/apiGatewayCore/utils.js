@@ -67,6 +67,7 @@ var utils = {
   },
   copy: function copy(obj) {
     if (null === obj || 'object' !== (typeof obj === 'undefined' ? 'undefined' : _typeof(obj))) return obj;
+    var Buffer = require('buffer').Buffer;
     if (Buffer.isBuffer(obj)) return Buffer.from(obj);
     var copy = obj.constructor();
     var attr = null;
