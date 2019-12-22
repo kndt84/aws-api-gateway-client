@@ -1,6 +1,6 @@
 {
   "name": "aws-api-gateway-client",
-  "version": "0.2.17",
+  "version": "0.3.0",
   "description": "A module for AWS API Gateway client",
   "repository": {
     "type": "git",
