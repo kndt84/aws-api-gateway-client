@@ -12,7 +12,6 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-/* eslint max-len: ["error", 100]*/
 
 import uritemplate from 'url-template';
 import apiGatewayClientFactory from './lib/apiGatewayCore/apiGatewayClient';
