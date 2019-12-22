@@ -12,7 +12,6 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-/* eslint max-len: ["error", 100]*/
 
 const utils = {
   assertDefined: function(object, name) {
@@ -59,6 +58,7 @@ const utils = {
   },
   copy: function(obj) {
     if (null === obj || 'object' !== typeof obj) return obj;
+    let Buffer = require('buffer').Buffer;
     if (Buffer.isBuffer(obj)) return Buffer.from(obj);
     let copy = obj.constructor();
     let attr = null;
