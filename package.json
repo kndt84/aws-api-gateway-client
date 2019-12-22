@@ -20,7 +20,7 @@
   "scripts": {
     "transpile": "babel src -d dist/",
     "prepublish": "npm run lint && npm run transpile",
-    "lint": "node node_modules/eslint/bin/eslint.js src lib *.js",
+    "lint": "node node_modules/eslint/bin/eslint.js src",
     "test": "npm run lint && nyc --reporter=text ava",
     "test:watch": "ava --watch"
   },
@@ -50,25 +50,6 @@
       "transform-es5-property-mutators"
     ]
   },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "extends": [
-      "eslint:recommended",
-      "google"
-    ],
-    "rules": {
-      "max-len": [
-        "error",
-        100
-      ],
-      "require-jsdoc": "off",
-      "no-undef": "off",
-      "import/extensions": "off",
-      "import/no-extraneous-dependencies": "off",
-      "comma-dangle": "off",
-      "no-useless-escape": "off"
-    }
-  },
   "dependencies": {
     "axios": "^0.19.0",
     "axios-retry": "^3.0.1",
@@ -89,11 +70,7 @@
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
-    "eslint": "^4.3.0",
-    "eslint-config-google": "^0.9.1",
-    "eslint-loader": "^2.0.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint": "^6.8.0",
     "nyc": "^11.1.0"
   }
 }

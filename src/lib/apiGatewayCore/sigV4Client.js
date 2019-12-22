@@ -68,7 +68,7 @@ sigV4ClientFactory.newClient = function(config) {
 
     let sortedQueryParams = [];
     for (let property in queryParams) {
-      if (queryParams.hasOwnProperty(property)) {
+      if (Object.prototype.hasOwnProperty.call(queryParams, "property")) {
         sortedQueryParams.push(property);
       }
     }
@@ -92,7 +92,7 @@ sigV4ClientFactory.newClient = function(config) {
     let canonicalHeaders = '';
     let sortedKeys = [];
     for (let property in headers) {
-      if (headers.hasOwnProperty(property)) {
+      if (Object.prototype.hasOwnProperty.call(headers, "property")) {
         sortedKeys.push(property);
       }
     }
@@ -107,7 +107,7 @@ sigV4ClientFactory.newClient = function(config) {
   function buildCanonicalSignedHeaders(headers) {
     let sortedKeys = [];
     for (let property in headers) {
-      if (headers.hasOwnProperty(property)) {
+      if (Object.prototype.hasOwnProperty.call(headers, "property")) {
         sortedKeys.push(property.toLowerCase());
       }
     }
@@ -199,7 +199,7 @@ sigV4ClientFactory.newClient = function(config) {
     }
 
     let datetime = new Date(new Date().getTime() + config.systemClockOffset).toISOString()
-                   .replace(/\.\d{3}Z$/, 'Z').replace(/[:\-]|\.\d{3}/g, '');
+                   .replace(/\.\d{3}Z$/, 'Z').replace(/[:-]|\.\d{3}/g, '');
     headers[X_AMZ_DATE] = datetime;
 
     if (awsSigV4Client.host) {

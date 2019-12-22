@@ -47,7 +47,7 @@ apigClientFactory.newClient = (config = {}) => {
 
   // extract endpoint and path from url
   const invokeUrl = config.invokeUrl;
-  const endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
+  const endpoint = /(^https?:\/\/[^/]+)/g.exec(invokeUrl)[1];
   const pathComponent = invokeUrl.substring(endpoint.length);
 
   const sigV4ClientConfig = {
