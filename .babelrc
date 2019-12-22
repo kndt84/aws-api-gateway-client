@@ -1,0 +1,14 @@
+{
+    "presets": [
+        "@babel/preset-env"
+    ],
+    "plugins": [
+        "@babel/plugin-transform-runtime"
+    ],
+    "ignore": [],
+    "env": {
+        "development": {
+            "sourceMaps": "inline"
+        }
+    }
+}

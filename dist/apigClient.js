@@ -1,49 +1,44 @@
-'use strict';
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /*
-                                                                                                                                                                                                                                                                               * Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-                                                                                                                                                                                                                                                                               *
-                                                                                                                                                                                                                                                                               * Licensed under the Apache License, Version 2.0 (the "License").
-                                                                                                                                                                                                                                                                               * You may not use this file except in compliance with the License.
-                                                                                                                                                                                                                                                                               * A copy of the License is located at
-                                                                                                                                                                                                                                                                               *
-                                                                                                                                                                                                                                                                               *  http://aws.amazon.com/apache2.0
-                                                                                                                                                                                                                                                                               *
-                                                                                                                                                                                                                                                                               * or in the "license" file accompanying this file. This file is distributed
-                                                                                                                                                                                                                                                                               * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-                                                                                                                                                                                                                                                                               * express or implied. See the License for the specific language governing
-                                                                                                                                                                                                                                                                               * permissions and limitations under the License.
-                                                                                                                                                                                                                                                                               */
-/* eslint max-len: ["error", 100]*/
+var _typeof2 = _interopRequireDefault(require("@babel/runtime/helpers/typeof"));
 
-var _urlTemplate = require('url-template');
+var _urlTemplate = _interopRequireDefault(require("url-template"));
 
-var _urlTemplate2 = _interopRequireDefault(_urlTemplate);
+var _apiGatewayClient = _interopRequireDefault(require("./lib/apiGatewayCore/apiGatewayClient"));
 
-var _apiGatewayClient = require('./lib/apiGatewayCore/apiGatewayClient');
-
-var _apiGatewayClient2 = _interopRequireDefault(_apiGatewayClient);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+/*
+ * Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *  http://aws.amazon.com/apache2.0
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
 var apigClientFactory = {};
 
 var removeEmpty = function removeEmpty(obj) {
   Object.keys(obj).forEach(function (key) {
-    return obj[key] && _typeof(obj[key]) === 'object' && removeEmpty(obj[key]) || obj[key] === undefined && delete obj[key];
+    return obj[key] && (0, _typeof2["default"])(obj[key]) === 'object' && removeEmpty(obj[key]) || obj[key] === undefined && delete obj[key];
   });
   return obj;
 };
 
 apigClientFactory.newClient = function () {
   var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
   var apigClient = {};
-
   config = Object.assign({
     accessKey: '',
     secretKey: '',
@@ -57,13 +52,11 @@ apigClientFactory.newClient = function () {
     systemClockOffset: 0,
     headers: {},
     host: undefined
-  }, removeEmpty(config));
+  }, removeEmpty(config)); // extract endpoint and path from url
 
-  // extract endpoint and path from url
   var invokeUrl = config.invokeUrl;
-  var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
+  var endpoint = /(^https?:\/\/[^/]+)/g.exec(invokeUrl)[1];
   var pathComponent = invokeUrl.substring(endpoint.length);
-
   var sigV4ClientConfig = {
     accessKey: config.accessKey,
     secretKey: config.secretKey,
@@ -79,8 +72,8 @@ apigClientFactory.newClient = function () {
     retryDelay: config.retryDelay,
     host: config.host
   };
-
   var authType = 'NONE';
+
   if (sigV4ClientConfig.accessKey !== undefined && sigV4ClientConfig.accessKey !== '' && sigV4ClientConfig.secretKey !== undefined && sigV4ClientConfig.secretKey !== '') {
     authType = 'AWS_IAM';
   }
@@ -95,25 +88,25 @@ apigClientFactory.newClient = function () {
     headers: config.headers
   };
 
-  var apiGatewayClient = _apiGatewayClient2.default.newClient(simpleHttpClientConfig, sigV4ClientConfig);
+  var apiGatewayClient = _apiGatewayClient["default"].newClient(simpleHttpClientConfig, sigV4ClientConfig);
 
   apigClient.invokeApi = function (params, pathTemplate, method, additionalParams, body) {
     if (additionalParams === undefined) additionalParams = {};
     if (body === undefined) body = '';
-
     var request = {
       verb: method.toUpperCase(),
-      path: pathComponent + _urlTemplate2.default.parse(pathTemplate).expand(params),
+      path: pathComponent + _urlTemplate["default"].parse(pathTemplate).expand(params),
       headers: additionalParams.headers || {},
       timeout: additionalParams.timeout || 0,
       queryParams: additionalParams.queryParams,
       body: body
     };
-
     return apiGatewayClient.makeRequest(request, authType, additionalParams, config.apiKey);
   };
 
   return apigClient;
 };
 
-exports.default = apigClientFactory;
+var _default = apigClientFactory;
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9hcGlnQ2xpZW50LmpzIl0sIm5hbWVzIjpbImFwaWdDbGllbnRGYWN0b3J5IiwicmVtb3ZlRW1wdHkiLCJvYmoiLCJPYmplY3QiLCJrZXlzIiwiZm9yRWFjaCIsImtleSIsInVuZGVmaW5lZCIsIm5ld0NsaWVudCIsImNvbmZpZyIsImFwaWdDbGllbnQiLCJhc3NpZ24iLCJhY2Nlc3NLZXkiLCJzZWNyZXRLZXkiLCJzZXNzaW9uVG9rZW4iLCJyZWdpb24iLCJhcGlLZXkiLCJpbnZva2VVcmwiLCJzZXJ2aWNlIiwiZGVmYXVsdENvbnRlbnRUeXBlIiwiZGVmYXVsdEFjY2VwdFR5cGUiLCJzeXN0ZW1DbG9ja09mZnNldCIsImhlYWRlcnMiLCJob3N0IiwiZW5kcG9pbnQiLCJleGVjIiwicGF0aENvbXBvbmVudCIsInN1YnN0cmluZyIsImxlbmd0aCIsInNpZ1Y0Q2xpZW50Q29uZmlnIiwic2VydmljZU5hbWUiLCJyZXRyaWVzIiwicmV0cnlDb25kaXRpb24iLCJyZXRyeURlbGF5IiwiYXV0aFR5cGUiLCJzaW1wbGVIdHRwQ2xpZW50Q29uZmlnIiwiYXBpR2F0ZXdheUNsaWVudCIsImFwaUdhdGV3YXlDbGllbnRGYWN0b3J5IiwiaW52b2tlQXBpIiwicGFyYW1zIiwicGF0aFRlbXBsYXRlIiwibWV0aG9kIiwiYWRkaXRpb25hbFBhcmFtcyIsImJvZHkiLCJyZXF1ZXN0IiwidmVyYiIsInRvVXBwZXJDYXNlIiwicGF0aCIsInVyaXRlbXBsYXRlIiwicGFyc2UiLCJleHBhbmQiLCJ0aW1lb3V0IiwicXVlcnlQYXJhbXMiLCJtYWtlUmVxdWVzdCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7QUFlQTs7QUFDQTs7QUFoQkE7Ozs7Ozs7Ozs7Ozs7O0FBa0JBLElBQU1BLGlCQUFpQixHQUFHLEVBQTFCOztBQUVBLElBQU1DLFdBQVcsR0FBRyxTQUFkQSxXQUFjLENBQUNDLEdBQUQsRUFBUztBQUMzQkMsRUFBQUEsTUFBTSxDQUFDQyxJQUFQLENBQVlGLEdB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S0FBaEI7QUFTQSxXQUFPUCxnQkFBZ0IsQ0FBQ2lCLFdBQWpCLENBQTZCVCxPQUE3QixFQUFzQ1YsUUFBdEMsRUFBZ0RRLGdCQUFoRCxFQUFrRWpDLE1BQU0sQ0FBQ08sTUFBekUsQ0FBUDtBQUNELEdBZEQ7O0FBZ0JBLFNBQU9OLFVBQVA7QUFDRCxDQWpGRDs7ZUFtRmVWLGlCIiwic291cmNlc0NvbnRlbnQiOlsiLypcbiAqIENvcHlyaWdodCAyMDEwLTIwMTYgQW1hem9uLmNvbSwgSW5jLiBvciBpdHMgYWZmaWxpYXRlcy4gQWxsIFJpZ2h0cyBSZXNlcnZlZC5cbiAqXG4gKiBMaWNlbnNlZCB1bmRlciB0aGUgQXBhY2hlIExpY2Vuc2UsIFZlcnNpb24gMi4wICh0aGUgXCJMaWNlbnNlXCIpLlxuICogWW91IG1heSBub3QgdXNlIHRoaXMgZmlsZSBleGNlcHQgaW4gY29tcGxpYW5jZSB3aXRoIHRoZSBMaWNlbnNlLlxuICogQSBjb3B5IG9mIHRoZSBMaWNlbnNlIGlzIGxvY2F0ZWQgYXRcbiAqXG4gKiAgaHR0cDovL2F3cy5hbWF6b24uY29tL2FwYWNoZTIuMFxuICpcbiAqIG9yIGluIHRoZSBcImxpY2Vuc2VcIiBmaWxlIGFjY29tcGFueWluZyB0aGlzIGZpbGUuIFRoaXMgZmlsZSBpcyBkaXN0cmlidXRlZFxuICogb24gYW4gXCJBUyBJU1wiIEJBU0lTLCBXSVRIT1VUIFdBUlJBTlRJRVMgT1IgQ09ORElUSU9OUyBPRiBBTlkgS0lORCwgZWl0aGVyXG4gKiBleHByZXNzIG9yIGltcGxpZWQuIFNlZSB0aGUgTGljZW5zZSBmb3IgdGhlIHNwZWNpZmljIGxhbmd1YWdlIGdvdmVybmluZ1xuICogcGVybWlzc2lvbnMgYW5kIGxpbWl0YXRpb25zIHVuZGVyIHRoZSBMaWNlbnNlLlxuICovXG5cbmltcG9ydCB1cml0ZW1wbGF0ZSBmcm9tICd1cmwtdGVtcGxhdGUnO1xuaW1wb3J0IGFwaUdhdGV3YXlDbGllbnRGYWN0b3J5IGZyb20gJy4vbGliL2FwaUdhdGV3YXlDb3JlL2FwaUdhdGV3YXlDbGllbnQnO1xuXG5jb25zdCBhcGlnQ2xpZW50RmFjdG9yeSA9IHt9O1xuXG5jb25zdCByZW1vdmVFbXB0eSA9IChvYmopID0+IHtcbiAgT2JqZWN0LmtleXMob2JqKS5mb3JFYWNoKChrZXkpID0+XG4gICAgKG9ialtrZXldICYmIHR5cGVvZiBvYmpba2V5XSA9PT0gJ29iamVjdCcpICYmIHJlbW92ZUVtcHR5KG9ialtrZXldKVxuICAgIHx8IChvYmpba2V5XSA9PT0gdW5kZWZpbmVkKSAmJiBkZWxldGUgb2JqW2tleV1cbiAgKTtcbiAgcmV0dXJuIG9iajtcbn07XG5cbmFwaWdDbGllbnRGYWN0b3J5Lm5ld0NsaWVudCA9IChjb25maWcgPSB7fSkgPT4ge1xuICBjb25zdCBhcGlnQ2xpZW50ID0ge307XG5cbiAgY29uZmlnID0gT2JqZWN0LmFzc2lnbih7XG4gICAgYWNjZXNzS2V5OiAnJyxcbiAgICBzZWNyZXRLZXk6ICcnLFxuICAgIHNlc3Npb25Ub2tlbjogJycsXG4gICAgcmVnaW9uOiAnJyxcbiAgICBhcGlLZXk6ICcnLFxuICAgIGludm9rZVVybDogJycsXG4gICAgc2VydmljZTogJ2V4ZWN1dGUtYXBpJyxcbiAgICBkZWZhdWx0Q29udGVudFR5cGU6ICdhcHBsaWNhdGlvbi9qc29uJyxcbiAgICBkZWZhdWx0QWNjZXB0VHlwZTogJ2FwcGxpY2F0aW9uL2pzb24nLFxuICAgIHN5c3RlbUNsb2NrT2Zmc2V0OiAwLFxuICAgIGhlYWRlcnM6IHt9LFxuICAgIGhvc3Q6IHVuZGVmaW5lZCxcbiAgfSwgcmVtb3ZlRW1wdHkoY29uZmlnKSk7XG5cbiAgLy8gZXh0cmFjdCBlbmRwb2ludCBhbmQgcGF0aCBmcm9tIHVybFxuICBjb25zdCBpbnZva2VVcmwgPSBjb25maWcuaW52b2tlVXJsO1xuICBjb25zdCBlbmRwb2ludCA9IC8oXmh0dHBzPzpcXC9cXC9bXi9dKykvZy5leGVjKGludm9rZVVybClbMV07XG4gIGNvbnN0IHBhdGhDb21wb25lbnQgPSBpbnZva2VVcmwuc3Vic3RyaW5nKGVuZHBvaW50Lmxlbmd0aCk7XG5cbiAgY29uc3Qgc2lnVjRDbGllbnRDb25maWcgPSB7XG4gICAgYWNjZXNzS2V5OiBjb25maWcuYWNjZXNzS2V5LFxuICAgIHNlY3JldEtleTogY29uZmlnLnNlY3JldEtleSxcbiAgICBzZXNzaW9uVG9rZW46IGNvbmZpZy5zZXNzaW9uVG9rZW4sXG4gICAgc2VydmljZU5hbWU6IGNvbmZpZy5zZXJ2aWNlLFxuICAgIHJlZ2lvbjogY29uZmlnLnJlZ2lvbixcbiAgICBlbmRwb2ludDogZW5kcG9pbnQsXG4gICAgZGVmYXVsdENvbnRlbnRUeXBlOiBjb25maWcuZGVmYXVsdENvbnRlbnRUeXBlLFxuICAgIGRlZmF1bHRBY2NlcHRUeXBlOiBjb25maWcuZGVmYXVsdEFjY2VwdFR5cGUsXG4gICAgc3lzdGVtQ2xvY2tPZmZzZXQ6IGNvbmZpZy5zeXN0ZW1DbG9ja09mZnNldCxcbiAgICByZXRyaWVzOiBjb25maWcucmV0cmllcyxcbiAgICByZXRyeUNvbmRpdGlvbjogY29uZmlnLnJldHJ5Q29uZGl0aW9uLFxuICAgIHJldHJ5RGVsYXk6IGNvbmZpZy5yZXRyeURlbGF5LFxuICAgIGhvc3Q6IGNvbmZpZy5ob3N0LFxuICB9O1xuXG4gIGxldCBhdXRoVHlwZSA9ICdOT05FJztcbiAgaWYgKFxuICAgIHNpZ1Y0Q2xpZW50Q29uZmlnLmFjY2Vzc0tleSAhPT0gdW5kZWZpbmVkXG4gICAgJiYgc2lnVjRDbGllbnRDb25maWcuYWNjZXNzS2V5ICE9PSAnJ1xuICAgICYmIHNpZ1Y0Q2xpZW50Q29uZmlnLnNlY3JldEtleSAhPT0gdW5kZWZpbmVkXG4gICAgJiYgc2lnVjRDbGllbnRDb25maWcuc2VjcmV0S2V5ICE9PSAnJ1xuICApIHtcbiAgICAgIGF1dGhUeXBlID0gJ0FXU19JQU0nO1xuICB9XG5cbiAgY29uc3Qgc2ltcGxlSHR0cENsaWVudENvbmZpZyA9IHtcbiAgICBlbmRwb2ludDogZW5kcG9pbnQsXG4gICAgZGVmYXVsdENvbnRlbnRUeXBlOiBjb25maWcuZGVmYXVsdENvbnRlbnRUeXBlLFxuICAgIGRlZmF1bHRBY2NlcHRUeXBlOiBjb25maWcuZGVmYXVsdEFjY2VwdFR5cGUsXG4gICAgcmV0cmllczogY29uZmlnLnJldHJpZXMsXG4gICAgcmV0cnlDb25kaXRpb246IGNvbmZpZy5yZXRyeUNvbmRpdGlvbixcbiAgICByZXRyeURlbGF5OiBjb25maWcucmV0cnlEZWxheSxcbiAgICBoZWFkZXJzOiBjb25maWcuaGVhZGVycyxcbiAgfTtcblxuICBjb25zdCBhcGlHYXRld2F5Q2xpZW50ID0gYXBpR2F0ZXdheUNsaWVudEZhY3RvcnkubmV3Q2xpZW50KFxuICAgIHNpbXBsZUh0dHBDbGllbnRDb25maWcsXG4gICAgc2lnVjRDbGllbnRDb25maWdcbiAgKTtcblxuICBhcGlnQ2xpZW50Lmludm9rZUFwaSA9IChwYXJhbXMsIHBhdGhUZW1wbGF0ZSwgbWV0aG9kLCBhZGRpdGlvbmFsUGFyYW1zLCBib2R5KSA9PiB7XG4gICAgaWYgKGFkZGl0aW9uYWxQYXJhbXM9PT11bmRlZmluZWQpIGFkZGl0aW9uYWxQYXJhbXM9e307XG4gICAgaWYgKGJvZHk9PT11bmRlZmluZWQpIGJvZHk9Jyc7XG5cbiAgICBjb25zdCByZXF1ZXN0ID0ge1xuICAgICAgICB2ZXJiOiBtZXRob2QudG9VcHBlckNhc2UoKSxcbiAgICAgICAgcGF0aDogcGF0aENvbXBvbmVudCArIHVyaXRlbXBsYXRlLnBhcnNlKHBhdGhUZW1wbGF0ZSkuZXhwYW5kKHBhcmFtcyksXG4gICAgICAgIGhlYWRlcnM6IGFkZGl0aW9uYWxQYXJhbXMuaGVhZGVycyB8fCB7fSxcbiAgICAgICAgdGltZW91dDogYWRkaXRpb25hbFBhcmFtcy50aW1lb3V0IHx8IDAsXG4gICAgICAgIHF1ZXJ5UGFyYW1zOiBhZGRpdGlvbmFsUGFyYW1zLnF1ZXJ5UGFyYW1zLFxuICAgICAgICBib2R5OiBib2R5XG4gICAgfTtcblxuICAgIHJldHVybiBhcGlHYXRld2F5Q2xpZW50Lm1ha2VSZXF1ZXN0KHJlcXVlc3QsIGF1dGhUeXBlLCBhZGRpdGlvbmFsUGFyYW1zLCBjb25maWcuYXBpS2V5KTtcbiAgfTtcblxuICByZXR1cm4gYXBpZ0NsaWVudDtcbn07XG5cbmV4cG9ydCBkZWZhdWx0IGFwaWdDbGllbnRGYWN0b3J5O1xuIl19
