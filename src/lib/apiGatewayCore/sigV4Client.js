@@ -205,7 +205,7 @@ sigV4ClientFactory.newClient = function(config) {
       headers[HOST] = awsSigV4Client.host;
     } else {
       let parser = urlParser.parse(awsSigV4Client.endpoint);
-      headers[HOST] = parser.host;
+      headers[HOST] = parser.hostname;
     }
 
     let canonicalRequest = buildCanonicalRequest(verb, path, queryParams, headers, body);
