@@ -12,7 +12,6 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-/* eslint max-len: ["error", 100]*/
 
 const utils = {
   assertDefined: function(object, name) {
@@ -64,7 +63,7 @@ const utils = {
     let copy = obj.constructor();
     let attr = null;
     for (attr in obj) {
-      if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+      if (Object.prototype.hasOwnProperty.call(obj, "attr")) copy[attr] = obj[attr];
     }
     return copy;
   },
@@ -73,11 +72,13 @@ const utils = {
     let merged = baseObj.constructor();
     let attr = null;
     for (attr in baseObj) {
-      if (baseObj.hasOwnProperty(attr)) merged[attr] = baseObj[attr];
+      if (Object.prototype.hasOwnProperty.call(baseObj, "attr")) merged[attr] = baseObj[attr];
     }
     if (null == additionalProps || 'object' != typeof additionalProps) return baseObj;
     for (attr in additionalProps) {
-      if (additionalProps.hasOwnProperty(attr)) merged[attr] = additionalProps[attr];
+      if (Object.prototype.hasOwnProperty.call(additionalProps, "attr")) {
+        merged[attr] = additionalProps[attr];
+      }
     }
     return merged;
   }

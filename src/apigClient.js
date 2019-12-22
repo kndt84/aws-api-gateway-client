@@ -12,7 +12,6 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-/* eslint max-len: ["error", 100]*/
 
 import uritemplate from 'url-template';
 import apiGatewayClientFactory from './lib/apiGatewayCore/apiGatewayClient';
@@ -47,7 +46,7 @@ apigClientFactory.newClient = (config = {}) => {
 
   // extract endpoint and path from url
   const invokeUrl = config.invokeUrl;
-  const endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
+  const endpoint = /(^https?:\/\/[^/]+)/g.exec(invokeUrl)[1];
   const pathComponent = invokeUrl.substring(endpoint.length);
 
   const sigV4ClientConfig = {

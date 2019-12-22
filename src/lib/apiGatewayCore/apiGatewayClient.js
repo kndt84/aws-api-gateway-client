@@ -12,6 +12,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
 import utils from './utils';
 import sigV4ClientFactory from './sigV4Client.js';
 import simpleHttpClientFactory from './simpleHttpClient.js';

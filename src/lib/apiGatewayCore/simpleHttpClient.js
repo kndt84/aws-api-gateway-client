@@ -12,7 +12,6 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-/* eslint max-len: ["error", 100]*/
 
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
@@ -28,7 +27,7 @@ simpleHttpClientFactory.newClient = (config) => {
 
     let canonicalQueryString = '';
     for (let property in queryParams) {
-      if (queryParams.hasOwnProperty(property)) {
+      if (Object.prototype.hasOwnProperty.call(queryParams, "property")) {
         canonicalQueryString += encodeURIComponent(property)
           + '=' + encodeURIComponent(queryParams[property]) + '&';
       }
