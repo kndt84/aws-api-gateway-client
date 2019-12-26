@@ -63,7 +63,7 @@ const utils = {
     let copy = obj.constructor();
     let attr = null;
     for (attr in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, "attr")) copy[attr] = obj[attr];
+      if (Object.prototype.hasOwnProperty.call(obj, attr)) copy[attr] = obj[attr];
     }
     return copy;
   },
@@ -72,11 +72,11 @@ const utils = {
     let merged = baseObj.constructor();
     let attr = null;
     for (attr in baseObj) {
-      if (Object.prototype.hasOwnProperty.call(baseObj, "attr")) merged[attr] = baseObj[attr];
+      if (Object.prototype.hasOwnProperty.call(baseObj, attr)) merged[attr] = baseObj[attr];
     }
     if (null == additionalProps || 'object' != typeof additionalProps) return baseObj;
     for (attr in additionalProps) {
-      if (Object.prototype.hasOwnProperty.call(additionalProps, "attr")) {
+      if (Object.prototype.hasOwnProperty.call(additionalProps, attr)) {
         merged[attr] = additionalProps[attr];
       }
     }

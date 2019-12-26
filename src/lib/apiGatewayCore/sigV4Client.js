@@ -67,7 +67,7 @@ sigV4ClientFactory.newClient = function(config) {
 
     let sortedQueryParams = [];
     for (let property in queryParams) {
-      if (Object.prototype.hasOwnProperty.call(queryParams, "property")) {
+      if (Object.prototype.hasOwnProperty.call(queryParams, property)) {
         sortedQueryParams.push(property);
       }
     }
@@ -91,7 +91,7 @@ sigV4ClientFactory.newClient = function(config) {
     let canonicalHeaders = '';
     let sortedKeys = [];
     for (let property in headers) {
-      if (Object.prototype.hasOwnProperty.call(headers, "property")) {
+      if (Object.prototype.hasOwnProperty.call(headers, property)) {
         sortedKeys.push(property);
       }
     }
@@ -106,7 +106,7 @@ sigV4ClientFactory.newClient = function(config) {
   function buildCanonicalSignedHeaders(headers) {
     let sortedKeys = [];
     for (let property in headers) {
-      if (Object.prototype.hasOwnProperty.call(headers, "property")) {
+      if (Object.prototype.hasOwnProperty.call(headers, property)) {
         sortedKeys.push(property.toLowerCase());
       }
     }

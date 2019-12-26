@@ -27,7 +27,7 @@ simpleHttpClientFactory.newClient = (config) => {
 
     let canonicalQueryString = '';
     for (let property in queryParams) {
-      if (Object.prototype.hasOwnProperty.call(queryParams, "property")) {
+      if (Object.prototype.hasOwnProperty.call(queryParams, property)) {
         canonicalQueryString += encodeURIComponent(property)
           + '=' + encodeURIComponent(queryParams[property]) + '&';
       }
