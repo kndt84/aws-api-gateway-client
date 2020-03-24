@@ -1,21 +1,16 @@
 {
   "name": "aws-api-gateway-client",
-  "version": "0.3.4",
+  "version": "1.0.0",
   "description": "A module for AWS API Gateway client",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kndt84/aws-api-gateway-client.git"
+    "url": "git+https://github.com/adastradev/aws-api-gateway-client.git"
   },
   "keywords": [
     "aws",
     "apigateway"
   ],
-  "author": "kndt84",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kndt84/aws-api-gateway-client/issues"
-  },
-  "homepage": "https://github.com/kndt84/aws-api-gateway-client#readme",
   "main": "dist/apigClient.js",
   "scripts": {
     "build": "babel src -d dist",
