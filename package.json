@@ -1,21 +1,16 @@
 {
-  "name": "aws-api-gateway-client",
-  "version": "0.3.4",
+  "name": "@adastradev/aws-api-gateway-client",
+  "version": "1.0.2",
   "description": "A module for AWS API Gateway client",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kndt84/aws-api-gateway-client.git"
+    "url": "git+https://github.com/adastradev/aws-api-gateway-client.git"
   },
   "keywords": [
     "aws",
     "apigateway"
   ],
-  "author": "kndt84",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kndt84/aws-api-gateway-client/issues"
-  },
-  "homepage": "https://github.com/kndt84/aws-api-gateway-client#readme",
   "main": "dist/apigClient.js",
   "scripts": {
     "build": "babel src -d dist",
@@ -23,27 +18,30 @@
     "lint": "node node_modules/eslint/bin/eslint.js src",
     "test": "nyc ava"
   },
+  "files": [
+    "/dist"
+  ],
   "ava": {
     "require": [
       "@babel/register"
     ]
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.19.2",
     "axios-retry": "^3.0.1",
-    "crypto-js": "^3.3.0",
+    "crypto-js": "^4.0.0",
     "url": "^0.11.0",
     "url-template": "^2.0.8"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.7",
-    "@babel/core": "^7.7.7",
-    "@babel/plugin-transform-runtime": "^7.7.6",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/register": "^7.7.7",
-    "@babel/runtime": "^7.7.7",
-    "ava": "^2.4.0",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/register": "^7.9.0",
+    "@babel/runtime": "^7.9.2",
+    "ava": "^3.5.1",
     "eslint": "^6.8.0",
-    "nyc": "^14.1.1"
+    "nyc": "^15.0.0"
   }
 }

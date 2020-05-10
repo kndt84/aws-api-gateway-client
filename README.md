@@ -14,7 +14,7 @@ For the JavaScript SDK to work your APIs need to support CORS. The Amazon API Ga
 
 # Install
 ```
-npm install aws-api-gateway-client
+npm install @adastradev/aws-api-gateway-client
 ```
 
 # Use the SDK in your project
