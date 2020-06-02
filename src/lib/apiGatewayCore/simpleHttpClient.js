@@ -73,7 +73,9 @@ simpleHttpClientFactory.newClient = (config) => {
     let simpleHttpRequest = {
       headers: headers,
       timeout: timeout,
-      data: body
+      data: body,
+      method: verb,
+      url: url,
     };
     if (config.retries !== undefined) {
       simpleHttpRequest.baseURL = url;
@@ -94,10 +96,8 @@ simpleHttpClientFactory.newClient = (config) => {
         retryCondition: config.retryCondition,
         retryDelay,
       });
-      return client.request({method: verb});
+      return client.request(simpleHttpRequest);
     }
-    simpleHttpRequest.method = verb;
-    simpleHttpRequest.url = url;
     return axios(simpleHttpRequest);
   };
 
