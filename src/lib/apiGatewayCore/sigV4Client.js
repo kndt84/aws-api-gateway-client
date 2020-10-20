@@ -248,16 +248,16 @@ sigV4ClientFactory.newClient = function(config) {
     let signedRequest = {
       headers: headers,
       timeout: timeout,
-      data: body
+      data: body,
+      method: verb,
+      url,
     };
     if (config.retries !== undefined) {
       signedRequest.baseURL = url;
       let client = axios.create(signedRequest);
 
       // Allow user configurable delay, or built-in exponential delay
-      let retryDelay = function() {
- return 0;
-};
+      let retryDelay = () => 0;
       if (config.retryDelay === 'exponential') {
         retryDelay = axiosRetry.exponentialDelay;
       } else if (typeof config.retryDelay === 'number') {
@@ -268,13 +268,12 @@ sigV4ClientFactory.newClient = function(config) {
 
       axiosRetry(client, {
         retries: config.retries,
-        retryCondition: (typeof config.retryCondition === 'function') ? config.retryCondition : axiosRetry.isNetworkOrIdempotentRequestError,
+        retryCondition: config.retryCondition,
         retryDelay,
       });
-      return client.request({method: verb});
+      return client.request(signedRequest);
     }
-    signedRequest.method = verb;
-    signedRequest.url = url;
+    
     return axios(signedRequest);
   };
 
