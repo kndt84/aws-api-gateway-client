@@ -92,7 +92,7 @@ simpleHttpClientFactory.newClient = (config) => {
       }
 
       axiosRetry(client, {
-        retries: config.retries,
+        ...config,
         retryCondition: (typeof config.retryCondition === 'function') ? config.retryCondition : axiosRetry.isNetworkOrIdempotentRequestError,
         retryDelay,
       });

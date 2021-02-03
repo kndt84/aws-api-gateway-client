@@ -267,13 +267,13 @@ sigV4ClientFactory.newClient = function(config) {
       }
 
       axiosRetry(client, {
-        retries: config.retries,
+        ...config,
         retryCondition: config.retryCondition,
         retryDelay,
       });
       return client.request(signedRequest);
     }
-    
+
     return axios(signedRequest);
   };
 
