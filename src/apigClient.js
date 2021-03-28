@@ -46,6 +46,10 @@ apigClientFactory.newClient = (config = {}) => {
 
   // extract endpoint and path from url
   const invokeUrl = config.invokeUrl;
+  if (!invokeUrl) {
+    throw new Error("invokeUrl must be specified!");
+  };
+
   const endpoint = /(^https?:\/\/[^/]+)/g.exec(invokeUrl)[1];
   const pathComponent = invokeUrl.substring(endpoint.length);
 
