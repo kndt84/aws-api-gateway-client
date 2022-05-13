@@ -81,7 +81,13 @@ sigV4ClientFactory.newClient = function (config) {
     var canonicalQueryString = '';
 
     for (var i = 0; i < sortedQueryParams.length; i++) {
-      canonicalQueryString += sortedQueryParams[i] + '=' + fixedEncodeURIComponent(queryParams[sortedQueryParams[i]]) + '&';
+      const queryParamsAsArray = Array.isArray(queryParams[sortedQueryParams[i]]) ?
+        queryParams[sortedQueryParams[i]] :
+        [ queryParams[sortedQueryParams[i]] ];
+
+      queryParamsAsArray.forEach(queryValue => {
+        canonicalQueryString += sortedQueryParams[i] + '=' + fixedEncodeURIComponent(queryValue) + '&';
+      });
     }
 
     return canonicalQueryString.substr(0, canonicalQueryString.length - 1);
