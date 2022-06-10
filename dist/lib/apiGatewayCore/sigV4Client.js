@@ -87,9 +87,9 @@ sigV4ClientFactory.newClient = function (config) {
     return canonicalQueryString.substr(0, canonicalQueryString.length - 1);
   }
 
-  function fixedEncodeURIComponent(str) {
-    return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
-      return '%' + c.charCodeAt(0).toString(16);
+  function fixedEncodeURIComponent (str) {
+    return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+      return '%' + c.charCodeAt(0).toString(16).toUpperCase();
     });
   }
 
