@@ -30,9 +30,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "axios": "^0.21.1",
-    "axios-retry": "^3.1.9",
-    "crypto-js": "^4.0.0",
+    "axios": "^1.7.3",
+    "axios-retry": "^4.5.0",
+    "crypto-js": "^4.2.0",
     "url": "^0.11.0",
     "url-template": "^2.0.8"
   },
